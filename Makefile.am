@@ -12,6 +12,7 @@ LIBPURPLE_EVENTS_REVISION=0
 LIBPURPLE_EVENTS_AGE=0
 
 pkgconfigdir = $(libdir)/pkgconfig
+vapidir = $(datadir)/vala/vapi
 
 AM_CFLAGS += \
 	-DLOCALEDIR=\"$(localedir)\" \
@@ -23,6 +24,10 @@ pkgconfig_DATA = \
 
 pkginclude_HEADERS = \
 	include/purple-events.h
+
+dist_vapi_DATA = \
+	vapi/purple-events.deps \
+	vapi/purple-events.vapi
 
 lib_LTLIBRARIES = \
 	libpurple-events.la

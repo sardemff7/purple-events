@@ -46,10 +46,6 @@ AC_DEFINE_UNQUOTED([PURPLE_DATADIR], ["`$PKG_CONFIG --variable=datadir purple`"]
 AC_SUBST(plugindir)
 
 
-AC_ARG_ENABLE(debug, AS_HELP_STRING([--enable-debug], [Enable debug]), [], enable_debug=no)
-if test x$enable_debug = xyes; then
-    AM_VALAFLAGS="${AM_VALAFLAGS} --debug"
-fi
 AC_SUBST(AM_CFLAGS)
 AC_SUBST(AM_LDFLAGS)
 

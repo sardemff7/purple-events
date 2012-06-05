@@ -43,7 +43,8 @@ purple_events_callback_signed_on(PurpleBuddy *buddy, PurpleEventsContext *contex
     for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
     {
         handler = handler_->data;
-        handler->signed_on(handler->plugin, buddy);
+        if ( handler->signed_on != NULL )
+            handler->signed_on(handler->plugin, buddy);
     }
 }
 
@@ -59,7 +60,8 @@ purple_events_callback_signed_off(PurpleBuddy *buddy, PurpleEventsContext *conte
     for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
     {
         handler = handler_->data;
-        handler->signed_off(handler->plugin, buddy);
+        if ( handler->signed_off != NULL )
+            handler->signed_off(handler->plugin, buddy);
     }
 }
 
@@ -81,7 +83,8 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
         {
             handler = handler_->data;
-            handler->special(handler->plugin, buddy, PURPLE_EVENTS_EVENT_SPECIAL_TYPE_NONE);
+            if ( handler->special != NULL )
+                handler->special(handler->plugin, buddy, PURPLE_EVENTS_EVENT_SPECIAL_TYPE_NONE);
         }
 
         /* TODO: make it work
@@ -108,7 +111,8 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
         {
             handler = handler_->data;
-            handler->away(handler->plugin, buddy, msg);
+            if ( handler->away != NULL )
+                handler->away(handler->plugin, buddy, msg);
         }
     }
     else if ( ( ! old_avail ) && new_avail )
@@ -119,7 +123,8 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
         {
             handler = handler_->data;
-            handler->back(handler->plugin, buddy, msg);
+            if ( handler->back != NULL )
+                handler->back(handler->plugin, buddy, msg);
         }
     }
     else if ( g_strcmp0(msg, purple_status_get_attr_string(old_status, "message")) != 0 )
@@ -130,7 +135,8 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
         {
             handler = handler_->data;
-            handler->status(handler->plugin, buddy, msg);
+            if ( handler->status != NULL )
+                handler->status(handler->plugin, buddy, msg);
         }
     }
 }
@@ -150,9 +156,15 @@ purple_events_callback_idle_changed(PurpleBuddy *buddy, gboolean oldidle, gboole
     {
         handler = handler_->data;
         if ( newidle )
-            handler->idle(handler->plugin, buddy);
+        {
+            if ( handler->idle != NULL )
+                handler->idle(handler->plugin, buddy);
+        }
         else
-            handler->idle_back(handler->plugin, buddy);
+        {
+            if ( handler->idle_back != NULL )
+                handler->idle_back(handler->plugin, buddy);
+        }
     }
 }
 
@@ -180,9 +192,15 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
     {
         handler = handler_->data;
         if ( action )
-            handler->im_action(handler->plugin, buddy, message);
+        {
+            if ( handler->im_action != NULL )
+                handler->im_action(handler->plugin, buddy, message);
+        }
         else
-            handler->im_message(handler->plugin, buddy, message);
+        {
+            if ( handler->im_message != NULL )
+                handler->im_message(handler->plugin, buddy, message);
+        }
     }
 }
 
@@ -210,9 +228,15 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
     {
         handler = handler_->data;
         if ( action )
-            handler->chat_action(handler->plugin, buddy, message);
+        {
+            if ( handler->chat_action != NULL )
+                handler->chat_action(handler->plugin, buddy, message);
+        }
         else
-            handler->chat_message(handler->plugin, buddy, message);
+        {
+            if ( handler->chat_message != NULL )
+                handler->chat_message(handler->plugin, buddy, message);
+        }
     }
 }
 

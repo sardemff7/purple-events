@@ -25,6 +25,7 @@
 #include <purple.h>
 
 #include <purple-events-context.h>
+#include <purple-events-handler.h>
 
 #include "events.h"
 #include "utils.h"

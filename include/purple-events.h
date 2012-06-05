@@ -60,35 +60,34 @@ typedef void (*PurpleEventsChatActionFunc)(PurplePlugin *plugin, PurpleBuddy *bu
 
 
 typedef struct _PurpleEventsContext PurpleEventsContext;
-typedef struct {
-	PurplePlugin *plugin;
-
-	PurpleEventsSignedOnFunc signed_on;
-	PurpleEventsSignedOffFunc signed_off;
-
-	PurpleEventsAwayFunc away;
-	PurpleEventsBackFunc back;
-
-	PurpleEventsStatusFunc status;
-	PurpleEventsSpecialFunc special;
-
-	PurpleEventsIdleFunc idle;
-	PurpleEventsIdleBackFunc idle_back;
-
-	PurpleEventsImMessageFunc im_message;
-	PurpleEventsImActionFunc im_action;
-
-	PurpleEventsChatMessageFunc chat_message;
-	PurpleEventsChatActionFunc chat_action;
-} PurpleEventsHandler;
+typedef struct _PurpleEventsHandler PurpleEventsHandler;
 
 
 void purple_events_context_connect_handler(PurpleEventsContext *context, PurpleEventsHandler *handler);
 void purple_events_context_disconnect_handler(PurpleEventsContext *context, PurpleEventsHandler *handler);
 
+
+#define PURPLE_EVENTS_HANDLER_ADD_CALLBACK(event_name, EventName) void purple_events_handler_add_##event_name##_callback(PurpleEventsHandler *handler, PurpleEvents##EventName##Func callback)
+PurpleEventsHandler *purple_events_handler_new(PurplePlugin *plugin);
+void purple_events_handler_free(PurpleEventsHandler *handler);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(signed_on, SignedOn);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(signed_off, SignedOff);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(away, Away);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(back, Back);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(status, Status);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(special, Special);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(idle, Idle);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(idle_back, IdleBack);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_message, ImMessage);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_action, ImAction);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_message, ChatMessage);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_action, ChatAction);
+
+
 const gchar *purple_events_utils_buddy_get_best_name(PurpleBuddy *buddy);
 const gchar *purple_events_utils_buddy_get_protocol(PurpleBuddy *buddy);
 gchar *purple_events_utils_protocol_get_icon_uri(const gchar *protocol_name, PurpleEventsUtilsIconFormat format);
+
 
 G_END_DECLS
 

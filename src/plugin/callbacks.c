@@ -49,7 +49,6 @@ purple_events_callback_signed_on(PurpleBuddy *buddy, PurpleEventsContext *contex
     }
 }
 
-
 void
 purple_events_callback_signed_off(PurpleBuddy *buddy, PurpleEventsContext *context)
 {
@@ -65,7 +64,6 @@ purple_events_callback_signed_off(PurpleBuddy *buddy, PurpleEventsContext *conte
             handler->signed_off(handler->plugin, buddy);
     }
 }
-
 
 void
 purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_status, PurpleStatus *new_status, PurpleEventsContext *context)
@@ -142,7 +140,6 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
     }
 }
 
-
 void
 purple_events_callback_idle_changed(PurpleBuddy *buddy, gboolean oldidle, gboolean newidle, PurpleEventsContext *context)
 {
@@ -168,7 +165,6 @@ purple_events_callback_idle_changed(PurpleBuddy *buddy, gboolean oldidle, gboole
         }
     }
 }
-
 
 void
 purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, const gchar *message, PurpleConversation *conv, PurpleMessageFlags flags, PurpleEventsContext *context)
@@ -205,7 +201,6 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
     }
 }
 
-
 void
 purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender, const gchar *message, PurpleConversation *conv, PurpleEventsContext *context)
 {
@@ -241,6 +236,7 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
     }
 }
 
+
 static gboolean
 _purple_events_callback_account_signed_on_timeout(gpointer user_data)
 {
@@ -254,7 +250,6 @@ _purple_events_callback_account_signed_on_timeout(gpointer user_data)
 
     return FALSE;
 }
-
 
 void
 purple_events_callback_account_signed_on(PurpleConnection *conn, PurpleEventsContext *context)

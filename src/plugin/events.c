@@ -53,7 +53,7 @@ static PurplePluginInfo _purple_events_plugin_info = {
     .dependencies   = NULL,
     .priority       = PURPLE_PRIORITY_DEFAULT,
 
-    .id             = PACKAGE_NAME,
+    .id             = "core-sardemff7-" PACKAGE_NAME,
     .name           = NULL,
     .version        = PACKAGE_VERSION,
     .summary        = NULL,

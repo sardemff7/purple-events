@@ -34,6 +34,7 @@ void purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old
 void purple_events_callback_idle_changed(PurpleBuddy *buddy, gboolean oldidle, gboolean newidle, PurpleEventsContext *context);
 void purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, const gchar *message, PurpleConversation *conv, PurpleMessageFlags flags, PurpleEventsContext *context);
 void purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender, const gchar *message, PurpleConversation *conv, PurpleEventsContext *context);
+void purple_events_callback_conversation_updated(PurpleConversation *conv, PurpleConvUpdateType type, PurpleEventsContext *context);
 void purple_events_callback_account_signed_on(PurpleConnection *conn, PurpleEventsContext *context);
 
 

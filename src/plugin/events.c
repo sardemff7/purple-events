@@ -161,6 +161,12 @@ _purple_events_load(PurplePlugin *plugin)
 
 
     purple_signal_connect(
+        conv_handle, "conversation-updated", plugin,
+        (PurpleCallback)purple_events_callback_conversation_updated, plugin->extra
+    );
+
+
+    purple_signal_connect(
         conn_handle, "signed-on", plugin,
         (PurpleCallback)purple_events_callback_account_signed_on, plugin->extra
     );

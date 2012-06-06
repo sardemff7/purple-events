@@ -381,6 +381,47 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
 }
 
 
+void
+purple_events_callback_conversation_updated(PurpleConversation *conv, PurpleConvUpdateType type, PurpleEventsContext *context)
+{
+    PurpleEventsHandler *handler;
+    GList *handler_;
+    switch ( type )
+    {
+    case PURPLE_CONV_UPDATE_UNSEEN:
+        if ( purple_conversation_has_focus(conv) && ( ! GPOINTER_TO_UINT(purple_conversation_get_data(conv, "purple-events-last-focus")) ) )
+        {
+            gpointer attach = NULL;
+            switch ( purple_conversation_get_type(conv) )
+            {
+            case PURPLE_CONV_TYPE_IM:
+                attach = purple_buddy_get_contact(purple_find_buddy(purple_conversation_get_account(conv), purple_conversation_get_name(conv)));
+            break;
+            case PURPLE_CONV_TYPE_CHAT:
+                attach = conv;
+            break;
+            default:
+            break;
+            }
+            if ( attach == NULL )
+                break;
+            for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
+            {
+                handler = handler_->data;
+                GList *event;
+                for ( event = g_hash_table_lookup(handler->events, attach) ; event != NULL ; event = g_list_next(event) )
+                    handler->end_event(handler->plugin, event->data);
+            }
+        }
+    break;
+    case PURPLE_CONV_UPDATE_TOPIC:
+    default:
+    break;
+    }
+    purple_conversation_set_data(conv, "purple-events-last-focus", GUINT_TO_POINTER(purple_conversation_has_focus(conv)));
+}
+
+
 static gboolean
 _purple_events_callback_account_signed_on_timeout(gpointer user_data)
 {

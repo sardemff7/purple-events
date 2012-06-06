@@ -173,6 +173,9 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
     if ( buddy == NULL )
         return;
 
+    if ( ( conv != NULL ) && purple_prefs_get_bool("/plugins/core/events/restrictions/new-conv-only") )
+        return;
+
     gboolean action;
     gchar *stripped_message;
 

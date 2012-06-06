@@ -50,8 +50,8 @@ purple_events_utils_check_event_dispatch(PurpleEventsContext *context, PurpleBud
     if ( ( ! purple_privacy_check(account, name) ) && purple_prefs_get_bool("/plugins/core/events/restrictions/blocked") )
         return FALSE;
 
-    PurpleConversation *conv = purple_find_conversation_with_account(PURPLE_CONV_TYPE_IM, name, account);
-    if ( ( conv != NULL ) && ( purple_conversation_has_focus(conv) || purple_prefs_get_bool("/plugins/core/events/restrictions/new-conv-only") ) )
+    PurpleConversation *conv = purple_find_conversation_with_account(PURPLE_CONV_TYPE_ANY, name, account);
+    if ( ( conv != NULL ) && purple_conversation_has_focus(conv) )
         return FALSE;
 
     PurpleContact *contact = purple_buddy_get_contact(buddy);

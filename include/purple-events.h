@@ -40,23 +40,23 @@ typedef enum
 } PurpleEventsUtilsIconFormat;
 
 
-typedef void (*PurpleEventsSignedOnFunc)(PurplePlugin *plugin, PurpleBuddy *buddy);
-typedef void (*PurpleEventsSignedOffFunc)(PurplePlugin *plugin, PurpleBuddy *buddy);
+typedef gpointer (*PurpleEventsSignedOnFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy);
+typedef gpointer (*PurpleEventsSignedOffFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy);
 
-typedef void (*PurpleEventsAwayFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message);
-typedef void (*PurpleEventsBackFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message);
+typedef gpointer (*PurpleEventsAwayFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
+typedef gpointer (*PurpleEventsBackFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
 
-typedef void (*PurpleEventsStatusFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message);
-typedef void (*PurpleEventsSpecialFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, PurpleEventsEventSpecialType type, ...);
+typedef gpointer (*PurpleEventsStatusFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
+typedef gpointer (*PurpleEventsSpecialFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, PurpleEventsEventSpecialType type, ...);
 
-typedef void (*PurpleEventsIdleFunc)(PurplePlugin *plugin, PurpleBuddy *buddy);
-typedef void (*PurpleEventsIdleBackFunc)(PurplePlugin *plugin, PurpleBuddy *buddy);
+typedef gpointer (*PurpleEventsIdleFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy);
+typedef gpointer (*PurpleEventsIdleBackFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy);
 
-typedef void (*PurpleEventsImMessageFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message);
-typedef void (*PurpleEventsImActionFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message);
+typedef gpointer (*PurpleEventsImMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
+typedef gpointer (*PurpleEventsImActionFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
 
-typedef void (*PurpleEventsChatMessageFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message);
-typedef void (*PurpleEventsChatActionFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message);
+typedef gpointer (*PurpleEventsChatMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
+typedef gpointer (*PurpleEventsChatActionFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
 
 
 typedef struct _PurpleEventsContext PurpleEventsContext;

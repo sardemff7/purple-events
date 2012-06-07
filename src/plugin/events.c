@@ -108,6 +108,7 @@ _purple_events_init(PurplePlugin *plugin)
     purple_prefs_add_bool("/plugins/core/events/restrictions/blocked", TRUE);
     purple_prefs_add_bool("/plugins/core/events/restrictions/new-conv-only", FALSE);
     purple_prefs_add_bool("/plugins/core/events/restrictions/only-available", FALSE);
+    purple_prefs_add_bool("/plugins/core/events/restrictions/stack-events", FALSE);
 }
 
 static void

@@ -39,13 +39,31 @@ purple_events_callback_signed_on(PurpleBuddy *buddy, PurpleEventsContext *contex
     if ( ! purple_events_utils_check_event_dispatch(context, buddy, "signed-on") )
         return;
 
+    gboolean stack;
+    stack = purple_prefs_get_bool("/plugins/core/events/restrictions/stack-events");
+
+    PurpleContact *contact;
+    contact = purple_buddy_get_contact(buddy);
+
     PurpleEventsHandler *handler;
     GList *handler_;
     for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
     {
         handler = handler_->data;
+
+        GList *events;
+        gpointer event = NULL;
+        gpointer old_event = NULL;
+
+        events = g_hash_table_lookup(handler->events, contact);
+        if ( ( ! stack ) && ( events != NULL ) )
+            old_event = events->data;
+
         if ( handler->signed_on != NULL )
-            handler->signed_on(handler->plugin, buddy);
+            event = handler->signed_on(handler->plugin, old_event, buddy);
+
+        if ( ( event != NULL ) && ( event != old_event ) )
+            g_hash_table_insert(handler->events, contact, g_list_prepend(events, event));
     }
 }
 
@@ -55,13 +73,31 @@ purple_events_callback_signed_off(PurpleBuddy *buddy, PurpleEventsContext *conte
     if ( ! purple_events_utils_check_event_dispatch(context, buddy, "signed-off") )
         return;
 
+    gboolean stack;
+    stack = purple_prefs_get_bool("/plugins/core/events/restrictions/stack-events");
+
+    PurpleContact *contact;
+    contact = purple_buddy_get_contact(buddy);
+
     PurpleEventsHandler *handler;
     GList *handler_;
     for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
     {
         handler = handler_->data;
+
+        GList *events;
+        gpointer event = NULL;
+        gpointer old_event = NULL;
+
+        events = g_hash_table_lookup(handler->events, contact);
+        if ( ( ! stack ) && ( events != NULL ) )
+            old_event = events->data;
+
         if ( handler->signed_off != NULL )
-            handler->signed_off(handler->plugin, buddy);
+            event = handler->signed_off(handler->plugin, old_event, buddy);
+
+        if ( ( event != NULL ) && ( event != old_event ) )
+            g_hash_table_insert(handler->events, contact, g_list_prepend(events, event));
     }
 }
 
@@ -74,6 +110,12 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
     PurpleEventsHandler *handler;
     GList *handler_;
 
+    gboolean stack;
+    stack = purple_prefs_get_bool("/plugins/core/events/restrictions/stack-events");
+
+    PurpleContact *contact;
+    contact = purple_buddy_get_contact(buddy);
+
     if ( purple_status_is_independent(old_status) )
     {
         if ( ! purple_events_utils_check_event_dispatch(context, buddy, "specials") )
@@ -82,8 +124,20 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
         {
             handler = handler_->data;
+
+            GList *events;
+            gpointer event = NULL;
+            gpointer old_event = NULL;
+
+            events = g_hash_table_lookup(handler->events, contact);
+            if ( ( ! stack ) && ( events != NULL ) )
+                old_event = events->data;
+
             if ( handler->special != NULL )
-                handler->special(handler->plugin, buddy, PURPLE_EVENTS_EVENT_SPECIAL_TYPE_NONE);
+                event = handler->special(handler->plugin, old_event, buddy, PURPLE_EVENTS_EVENT_SPECIAL_TYPE_NONE);
+
+            if ( ( event != NULL ) && ( event != old_event ) )
+                g_hash_table_insert(handler->events, contact, g_list_prepend(events, event));
         }
 
         /* TODO: make it work
@@ -110,8 +164,20 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
         {
             handler = handler_->data;
+
+            GList *events;
+            gpointer event = NULL;
+            gpointer old_event = NULL;
+
+            events = g_hash_table_lookup(handler->events, contact);
+            if ( ( ! stack ) && ( events != NULL ) )
+                old_event = events->data;
+
             if ( handler->away != NULL )
-                handler->away(handler->plugin, buddy, msg);
+                event = handler->away(handler->plugin, old_event, buddy, msg);
+
+            if ( ( event != NULL ) && ( event != old_event ) )
+                g_hash_table_insert(handler->events, contact, g_list_prepend(events, event));
         }
     }
     else if ( ( ! old_avail ) && new_avail )
@@ -122,8 +188,20 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
         {
             handler = handler_->data;
+
+            GList *events;
+            gpointer event = NULL;
+            gpointer old_event = NULL;
+
+            events = g_hash_table_lookup(handler->events, contact);
+            if ( ( ! stack ) && ( events != NULL ) )
+                old_event = events->data;
+
             if ( handler->back != NULL )
-                handler->back(handler->plugin, buddy, msg);
+                event = handler->back(handler->plugin, old_event, buddy, msg);
+
+            if ( ( event != NULL ) && ( event != old_event ) )
+                g_hash_table_insert(handler->events, contact, g_list_prepend(events, event));
         }
     }
     else if ( g_strcmp0(msg, purple_status_get_attr_string(old_status, "message")) != 0 )
@@ -134,8 +212,20 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
         {
             handler = handler_->data;
+
+            GList *events;
+            gpointer event = NULL;
+            gpointer old_event = NULL;
+
+            events = g_hash_table_lookup(handler->events, contact);
+            if ( ( ! stack ) && ( events != NULL ) )
+                old_event = events->data;
+
             if ( handler->status != NULL )
-                handler->status(handler->plugin, buddy, msg);
+                event = handler->status(handler->plugin, old_event, buddy, msg);
+
+            if ( ( event != NULL ) && ( event != old_event ) )
+                g_hash_table_insert(handler->events, contact, g_list_prepend(events, event));
         }
     }
 }
@@ -148,21 +238,39 @@ purple_events_callback_idle_changed(PurpleBuddy *buddy, gboolean oldidle, gboole
     if ( ! purple_events_utils_check_event_dispatch(context, buddy, "idle") )
         return;
 
+    gboolean stack;
+    stack = purple_prefs_get_bool("/plugins/core/events/restrictions/stack-events");
+
+    PurpleContact *contact;
+    contact = purple_buddy_get_contact(buddy);
+
     PurpleEventsHandler *handler;
     GList *handler_;
     for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
     {
         handler = handler_->data;
+
+        GList *events;
+        gpointer event = NULL;
+        gpointer old_event = NULL;
+
+        events = g_hash_table_lookup(handler->events, contact);
+        if ( ( ! stack ) && ( events != NULL ) )
+            old_event = events->data;
+
         if ( newidle )
         {
             if ( handler->idle != NULL )
-                handler->idle(handler->plugin, buddy);
+                event = handler->idle(handler->plugin, old_event, buddy);
         }
         else
         {
             if ( handler->idle_back != NULL )
-                handler->idle_back(handler->plugin, buddy);
+                event = handler->idle_back(handler->plugin, old_event, buddy);
         }
+
+        if ( ( event != NULL ) && ( event != old_event ) )
+            g_hash_table_insert(handler->events, contact, g_list_prepend(events, event));
     }
 }
 
@@ -186,21 +294,39 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
     if ( ! purple_events_utils_check_event_dispatch(context, buddy, action ? "action" : "message") )
         return;
 
+    gboolean stack;
+    stack = purple_prefs_get_bool("/plugins/core/events/restrictions/stack-events");
+
+    PurpleContact *contact;
+    contact = purple_buddy_get_contact(buddy);
+
     PurpleEventsHandler *handler;
     GList *handler_;
     for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
     {
         handler = handler_->data;
+
+        GList *events;
+        gpointer event = NULL;
+        gpointer old_event = NULL;
+
+        events = g_hash_table_lookup(handler->events, contact);
+        if ( ( ! stack ) && ( events != NULL ) )
+            old_event = events->data;
+
         if ( action )
         {
             if ( handler->im_action != NULL )
-                handler->im_action(handler->plugin, buddy, message);
+                event = handler->im_action(handler->plugin, old_event, buddy, message);
         }
         else
         {
             if ( handler->im_message != NULL )
-                handler->im_message(handler->plugin, buddy, message);
+                event = handler->im_message(handler->plugin, old_event, buddy, message);
         }
+
+        if ( ( event != NULL ) && ( event != old_event ) )
+            g_hash_table_insert(handler->events, contact, g_list_prepend(events, event));
     }
 }
 
@@ -221,21 +347,36 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
     if ( ! purple_events_utils_check_event_dispatch(context, buddy, action ? "action" : "message") )
         return;
 
+    gboolean stack;
+    stack = purple_prefs_get_bool("/plugins/core/events/restrictions/stack-events");
+
     PurpleEventsHandler *handler;
     GList *handler_;
     for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
     {
         handler = handler_->data;
+
+        GList *events;
+        gpointer event = NULL;
+        gpointer old_event = NULL;
+
+        events = g_hash_table_lookup(handler->events, conv);
+        if ( ( ! stack ) && ( events != NULL ) )
+            old_event = events->data;
+
         if ( action )
         {
             if ( handler->chat_action != NULL )
-                handler->chat_action(handler->plugin, buddy, message);
+                event = handler->chat_action(handler->plugin, old_event, buddy, message);
         }
         else
         {
             if ( handler->chat_message != NULL )
-                handler->chat_message(handler->plugin, buddy, message);
+                event = handler->chat_message(handler->plugin, old_event, buddy, message);
         }
+
+        if ( ( event != NULL ) && ( event != old_event ) )
+            g_hash_table_insert(handler->events, conv, g_list_prepend(events, event));
     }
 }
 

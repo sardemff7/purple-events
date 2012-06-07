@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 
 struct _PurpleEventsHandler {
 	PurplePlugin *plugin;
+	GHashTable *events;
 
 	PurpleEventsSignedOnFunc signed_on;
 	PurpleEventsSignedOffFunc signed_off;

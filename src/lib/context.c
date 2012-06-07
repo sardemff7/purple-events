@@ -24,12 +24,18 @@
 #include <purple.h>
 
 #include <purple-events-context.h>
+#include <purple-events-handler.h>
 
 void
 purple_events_context_connect_handler(PurpleEventsContext *context, PurpleEventsHandler *handler)
 {
     g_return_if_fail(context != NULL);
     g_return_if_fail(handler != NULL);
+
+    /*
+     * We check callbacks we really need
+     */
+    g_return_if_fail(handler->end_event != NULL);
 
     context->handlers = g_list_prepend(context->handlers, handler);
 }

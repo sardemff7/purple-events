@@ -58,6 +58,8 @@ typedef gpointer (*PurpleEventsImActionFunc)(PurplePlugin *plugin, gpointer even
 typedef gpointer (*PurpleEventsChatMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
 typedef gpointer (*PurpleEventsChatActionFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
 
+typedef void (*PurpleEventsEndEventFunc)(PurplePlugin *plugin, gpointer event);
+
 
 typedef struct _PurpleEventsContext PurpleEventsContext;
 typedef struct _PurpleEventsHandler PurpleEventsHandler;
@@ -83,6 +85,7 @@ PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_message, ImMessage);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_action, ImAction);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_message, ChatMessage);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_action, ChatAction);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(end_event, EndEvent);
 
 
 const gchar *purple_events_utils_buddy_get_best_name(PurpleBuddy *buddy);

@@ -49,6 +49,8 @@ struct _PurpleEventsHandler {
 
 	PurpleEventsChatMessageFunc chat_message;
 	PurpleEventsChatActionFunc chat_action;
+
+	PurpleEventsEndEventFunc end_event;
 };
 
 

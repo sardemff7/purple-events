@@ -28,6 +28,8 @@
 PurpleEventsHandler *
 purple_events_handler_new(PurplePlugin *plugin)
 {
+    g_return_val_if_fail(plugin != NULL, NULL);
+
     PurpleEventsHandler *handler;
 
     handler = g_new0(PurpleEventsHandler, 1);
@@ -40,6 +42,8 @@ purple_events_handler_new(PurplePlugin *plugin)
 void
 purple_events_handler_free(PurpleEventsHandler *handler)
 {
+    g_return_if_fail(handler != NULL);
+
     g_free(handler);
 }
 

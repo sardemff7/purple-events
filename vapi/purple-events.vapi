@@ -37,66 +37,70 @@ namespace PurpleEvents
     }
 
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void SignedOnFunc(Purple.Plugin plugin, Purple.Buddy buddy);
+    public delegate void SignedOnFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy);
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void SignedOffFunc(Purple.Plugin plugin, Purple.Buddy buddy);
+    public delegate void SignedOffFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy);
 
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void AwayFunc(Purple.Plugin plugin, Purple.Buddy buddy, string? message);
+    public delegate void AwayFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy, string? message);
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void BackFunc(Purple.Plugin plugin, Purple.Buddy buddy, string? message);
-
-    [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void StatusFunc(Purple.Plugin plugin, Purple.Buddy buddy, string? message);
-    [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void SpecialFunc(Purple.Plugin plugin, Purple.Buddy buddy, EventSpecialType type, ...);
+    public delegate void BackFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy, string? message);
 
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void IdleFunc(Purple.Plugin plugin, Purple.Buddy buddy);
+    public delegate void StatusFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy, string? message);
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void IdleBackFunc(Purple.Plugin plugin, Purple.Buddy buddy);
-
-    [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void ImActionFunc(Purple.Plugin plugin, Purple.Buddy buddy, string message);
-    [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void ImMessageFunc(Purple.Plugin plugin, Purple.Buddy buddy, string message);
+    public delegate void SpecialFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy, EventSpecialType type, ...);
 
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void ChatActionFunc(Purple.Plugin plugin, Purple.Buddy buddy, string message);
+    public delegate void IdleFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy);
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void ChatMessageFunc(Purple.Plugin plugin, Purple.Buddy buddy, string message);
+    public delegate void IdleBackFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy);
 
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public struct Handler
-    {
-        public unowned Purple.Plugin plugin;
+    public delegate void ImMessageFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy, string message);
+    [CCode (cheader_filename = "purple-events.h", has_target = false)]
+    public delegate void ImActionFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy, string message);
 
-        public SignedOnFunc signed_on;
-        public SignedOffFunc signed_off;
+    [CCode (cheader_filename = "purple-events.h", has_target = false)]
+    public delegate void ChatMessageFunc(Purple.Plugin plugin, void *event, Purple.Conversation conv, Purple.Buddy buddy, string message);
+    [CCode (cheader_filename = "purple-events.h", has_target = false)]
+    public delegate void ChatActionFunc(Purple.Plugin plugin, void *event, Purple.Conversation conv, Purple.Buddy buddy, string message);
 
-        public AwayFunc away;
-        public BackFunc back;
-
-        public StatusFunc status;
-        public SpecialFunc special;
-
-        public IdleFunc idle;
-        public IdleBackFunc idle_back;
-
-        public ImMessageFunc im_message;
-        public ImActionFunc im_action;
-
-        public ChatMessageFunc chat_message;
-        public ChatActionFunc chat_action;
-    }
+    [CCode (cheader_filename = "purple-events.h", has_target = false)]
+    public delegate void EndEventFunc(Purple.Plugin plugin, void *event);
 
     [CCode (cheader_filename = "purple-events.h")]
     [Compact]
-    public class Context
+    public class Handler
     {
-        public void connect_handler(Handler *handler);
-        public void disconnect_handler(Handler *handler);
+        public Handler(Purple.Plugin plugin);
+        public void remove_event(void *attach, void *event);
+
+        public void add_signed_on_callback(SignedOnFunc @callback);
+        public void add_signed_off_callback(SignedOffFunc @callback);
+
+        public void add_away_callback(AwayFunc @callback);
+        public void add_back_callback(BackFunc @callback);
+
+        public void add_status_callback(StatusFunc @callback);
+        public void add_special_callback(SpecialFunc @callback);
+
+        public void add_idle_callback(IdleFunc @callback);
+        public void add_idle_back_callback(IdleBackFunc @callback);
+
+        public void add_im_message_callback(ImMessageFunc @callback);
+        public void add_im_action_callback(ImActionFunc @callback);
+
+        public void add_chat_message_callback(ChatActionFunc @callback);
+        public void add_chat_action_callback(ChatMessageFunc @callback);
+
+        public void add_end_event_callback(EndEventFunc @callback);
     }
+
+    [CCode (cheader_filename = "purple-events.h")]
+    public static void connect_handler(Handler handler);
+    [CCode (cheader_filename = "purple-events.h")]
+    public static void disconnect_handler(Handler handler);
 
     namespace Utils
     {

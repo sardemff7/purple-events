@@ -118,6 +118,12 @@ purple_events_ui_get_pref_frame(PurplePlugin *plugin)
     );
     purple_plugin_pref_frame_add(frame, pref);
 
+    pref = purple_plugin_pref_new_with_name_and_label(
+        "/plugins/core/libnotify+/stack-events",
+        _("Stack events (do not ignore a buddy action if an event is already attached to)")
+    );
+    purple_plugin_pref_frame_add(frame, pref);
+
     return frame;
 }
 

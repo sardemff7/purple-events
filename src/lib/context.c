@@ -28,11 +28,17 @@
 void
 purple_events_context_connect_handler(PurpleEventsContext *context, PurpleEventsHandler *handler)
 {
+    g_return_if_fail(context != NULL);
+    g_return_if_fail(handler != NULL);
+
     context->handlers = g_list_prepend(context->handlers, handler);
 }
 
 void
 purple_events_context_disconnect_handler(PurpleEventsContext *context, PurpleEventsHandler *handler)
 {
+    g_return_if_fail(context != NULL);
+    g_return_if_fail(handler != NULL);
+
     context->handlers = g_list_remove(context->handlers, handler);
 }

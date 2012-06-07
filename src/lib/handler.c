@@ -49,6 +49,21 @@ purple_events_handler_free(PurpleEventsHandler *handler)
     g_free(handler);
 }
 
+void
+purple_events_handler_remove_event(PurpleEventsHandler *handler, gpointer attach, gpointer event)
+{
+    g_return_if_fail(handler != NULL);
+
+    GList *events;
+
+    events = g_hash_table_lookup(handler->events, attach);
+    events = g_list_remove(events, event);
+    if ( events == NULL )
+        g_hash_table_remove(handler->events, attach);
+    else
+        g_hash_table_insert(handler->events, attach, events);
+}
+
 #define PURPLE_EVENTS_HANDLER_ADD_CALLBACK_DEF(event_name, EventName) PURPLE_EVENTS_HANDLER_ADD_CALLBACK(event_name, EventName) { handler->event_name = callback; }
 
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK_DEF(signed_on, SignedOn);

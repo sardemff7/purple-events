@@ -70,6 +70,7 @@ void purple_events_context_disconnect_handler(PurpleEventsContext *context, Purp
 #define PURPLE_EVENTS_HANDLER_ADD_CALLBACK(event_name, EventName) void purple_events_handler_add_##event_name##_callback(PurpleEventsHandler *handler, PurpleEvents##EventName##Func callback)
 PurpleEventsHandler *purple_events_handler_new(PurplePlugin *plugin);
 void purple_events_handler_free(PurpleEventsHandler *handler);
+void purple_events_handler_remove_event(PurpleEventsHandler *handler, gpointer attach, gpointer event);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(signed_on, SignedOn);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(signed_off, SignedOff);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(away, Away);

@@ -61,12 +61,12 @@ typedef gpointer (*PurpleEventsChatActionFunc)(PurplePlugin *plugin, gpointer ev
 typedef void (*PurpleEventsEndEventFunc)(PurplePlugin *plugin, gpointer event);
 
 
-typedef struct _PurpleEventsContext PurpleEventsContext;
 typedef struct _PurpleEventsHandler PurpleEventsHandler;
 
 
-void purple_events_context_connect_handler(PurpleEventsContext *context, PurpleEventsHandler *handler);
-void purple_events_context_disconnect_handler(PurpleEventsContext *context, PurpleEventsHandler *handler);
+const gchar *purple_events_get_plugin_id();
+void purple_events_connect_handler(PurpleEventsHandler *handler);
+void purple_events_disconnect_handler(PurpleEventsHandler *handler);
 
 
 #define PURPLE_EVENTS_HANDLER_ADD_CALLBACK(event_name, EventName) void purple_events_handler_add_##event_name##_callback(PurpleEventsHandler *handler, PurpleEvents##EventName##Func callback)

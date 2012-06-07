@@ -27,12 +27,11 @@
 
 G_BEGIN_DECLS
 
-
-struct _PurpleEventsContext {
+typedef struct {
     PurplePlugin *plugin;
     GList *just_signed_on_accounts;
     GList *handlers;
-};
+} PurpleEventsContext;
 
 
 G_END_DECLS

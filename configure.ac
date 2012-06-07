@@ -24,6 +24,10 @@ IT_PROG_INTLTOOL([0.40.0])
 
 AC_PROG_INSTALL
 
+
+PACKAGE_DEVELOPER="sardemff7"
+AC_DEFINE_UNQUOTED([PURPLE_EVENTS_PLUGIN_ID], ["core-$PACKAGE_DEVELOPER-$PACKAGE_NAME"], [libpurple plugin id])
+
 AM_CFLAGS="-Wall -Wextra -Wno-unused-parameter"
 AM_LDFLAGS=""
 

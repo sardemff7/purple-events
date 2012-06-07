@@ -20,16 +20,22 @@
  *
  */
 
+#include <config.h>
 #include <glib.h>
 #include <purple.h>
 
 #include <purple-events-context.h>
 #include <purple-events-handler.h>
 
-void
-purple_events_context_connect_handler(PurpleEventsContext *context, PurpleEventsHandler *handler)
+const gchar *
+purple_events_get_plugin_id()
 {
-    g_return_if_fail(context != NULL);
+    return PURPLE_EVENTS_PLUGIN_ID;
+}
+
+void
+purple_events_connect_handler(PurpleEventsHandler *handler)
+{
     g_return_if_fail(handler != NULL);
 
     /*
@@ -37,14 +43,27 @@ purple_events_context_connect_handler(PurpleEventsContext *context, PurpleEvents
      */
     g_return_if_fail(handler->end_event != NULL);
 
+    PurplePlugin *plugin;
+    PurpleEventsContext *context;
+
+    plugin = purple_plugins_find_with_id(PURPLE_EVENTS_PLUGIN_ID);
+    g_return_if_fail(plugin != NULL);
+    context = plugin->extra;
+
     context->handlers = g_list_prepend(context->handlers, handler);
 }
 
 void
-purple_events_context_disconnect_handler(PurpleEventsContext *context, PurpleEventsHandler *handler)
+purple_events_disconnect_handler(PurpleEventsHandler *handler)
 {
-    g_return_if_fail(context != NULL);
     g_return_if_fail(handler != NULL);
+
+    PurplePlugin *plugin;
+    PurpleEventsContext *context;
+
+    plugin = purple_plugins_find_with_id(PURPLE_EVENTS_PLUGIN_ID);
+    g_return_if_fail(plugin != NULL);
+    context = plugin->extra;
 
     context->handlers = g_list_remove(context->handlers, handler);
 }

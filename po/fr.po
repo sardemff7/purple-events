@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purple-events 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-05 00:27+0200\n"
+"POT-Creation-Date: 2012-06-07 20:07+0200\n"
 "PO-Revision-Date: 2012-06-04 23:40+0200\n"
 "Last-Translator: Quentin Glidic <sardemff7+pidgin@sardemff7.net>\n"
 "Language-Team: French\n"
@@ -50,39 +50,39 @@ msgstr ""
 msgid "Events:"
 msgstr "Événements :"
 
-#: ../src/plugin/ui.c:46 ../src/plugin/ui.c:175
+#: ../src/plugin/ui.c:46 ../src/plugin/ui.c:181
 msgid "Messages"
 msgstr "Messages"
 
-#: ../src/plugin/ui.c:52 ../src/plugin/ui.c:176
+#: ../src/plugin/ui.c:52 ../src/plugin/ui.c:182
 msgid "Actions (/me messages)"
 msgstr "Action (messages /me)"
 
-#: ../src/plugin/ui.c:58 ../src/plugin/ui.c:177
+#: ../src/plugin/ui.c:58 ../src/plugin/ui.c:183
 msgid "Buddy signing on"
 msgstr "Connexion d’un contact"
 
-#: ../src/plugin/ui.c:64 ../src/plugin/ui.c:178
+#: ../src/plugin/ui.c:64 ../src/plugin/ui.c:184
 msgid "Buddy signing off"
 msgstr "Déconnexion d’un contact"
 
-#: ../src/plugin/ui.c:70 ../src/plugin/ui.c:179
+#: ../src/plugin/ui.c:70 ../src/plugin/ui.c:185
 msgid "Buddy going away"
 msgstr "Absence d’un contact"
 
-#: ../src/plugin/ui.c:76 ../src/plugin/ui.c:180
+#: ../src/plugin/ui.c:76 ../src/plugin/ui.c:186
 msgid "Buddy going idle"
 msgstr "Inactivité d’un contact"
 
-#: ../src/plugin/ui.c:82 ../src/plugin/ui.c:181
+#: ../src/plugin/ui.c:82 ../src/plugin/ui.c:187
 msgid "Buddy coming back"
 msgstr "Retour d’un contact"
 
-#: ../src/plugin/ui.c:88 ../src/plugin/ui.c:182
+#: ../src/plugin/ui.c:88 ../src/plugin/ui.c:188
 msgid "Status message change (or removal)"
 msgstr "Changement (ou suppression) du message de statut"
 
-#: ../src/plugin/ui.c:94 ../src/plugin/ui.c:183
+#: ../src/plugin/ui.c:94 ../src/plugin/ui.c:189
 msgid "Special events"
 msgstr "Événements spéciaux"
 
@@ -102,62 +102,70 @@ msgstr "Seulement pour les nouvelles conversations"
 msgid "Only when available"
 msgstr "Seulement si je suis disponible"
 
-#: ../src/plugin/ui.c:238
+#: ../src/plugin/ui.c:123
+msgid ""
+"Stack events (do not ignore a buddy action if an event is already attached "
+"to)"
+msgstr ""
+"Empiler les événements (ne pas ignorer une action d’un contact si un "
+"événements le concerne déjà)"
+
+#: ../src/plugin/ui.c:244
 msgid "Events selection"
 msgstr "Sélection des événements"
 
-#: ../src/plugin/ui.c:239
+#: ../src/plugin/ui.c:245
 msgid "Select events for contact"
 msgstr "Sélectionnez les événements pour le contact"
 
-#: ../src/plugin/ui.c:239
+#: ../src/plugin/ui.c:245
 msgid "Select events for group"
 msgstr "Sélectionnez les événements pour le groupe"
 
-#: ../src/plugin/ui.c:242
+#: ../src/plugin/ui.c:248
 msgid "_Set events for contact"
 msgstr "_Choisir les événements pour le contact"
 
-#: ../src/plugin/ui.c:242
+#: ../src/plugin/ui.c:248
 msgid "_Set events for group"
 msgstr "_Choisir les événements pour le groupe"
 
-#: ../src/plugin/ui.c:244
+#: ../src/plugin/ui.c:250
 msgid "_Cancel"
 msgstr "_Annuler"
 
-#: ../src/plugin/ui.c:274
+#: ../src/plugin/ui.c:280
 msgid "Use global settings"
 msgstr "Utiliser les réglages globaux"
 
-#: ../src/plugin/ui.c:276
+#: ../src/plugin/ui.c:282
 msgid "Use group settings"
 msgstr "Utiliser les réglages du groupe"
 
-#: ../src/plugin/ui.c:282
+#: ../src/plugin/ui.c:288
 msgid "Disable all events"
 msgstr "Désactiver tous les événements"
 
-#: ../src/plugin/ui.c:286
+#: ../src/plugin/ui.c:292
 msgid "Select events"
 msgstr "Sélectionner les événements"
 
-#: ../src/plugin/ui.c:292
+#: ../src/plugin/ui.c:298
 msgid "Current events: all disabled"
 msgstr "Événements actuels : tous désactivés"
 
-#: ../src/plugin/ui.c:296
+#: ../src/plugin/ui.c:302
 msgid "Current events: global settings"
 msgstr "Événements actuels : réglages globaux"
 
-#: ../src/plugin/ui.c:298
+#: ../src/plugin/ui.c:304
 msgid "Current events: group settings"
 msgstr "Événements actuels : réglages de groupe"
 
-#: ../src/plugin/ui.c:301
+#: ../src/plugin/ui.c:307
 msgid "Current events: selection"
 msgstr "Événements actuels : sélection"
 
-#: ../src/plugin/ui.c:309
+#: ../src/plugin/ui.c:315
 msgid "Events"
 msgstr "Événements"

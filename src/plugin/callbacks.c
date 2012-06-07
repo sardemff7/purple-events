@@ -367,12 +367,12 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
         if ( action )
         {
             if ( handler->chat_action != NULL )
-                event = handler->chat_action(handler->plugin, old_event, buddy, message);
+                event = handler->chat_action(handler->plugin, old_event, conv, buddy, message);
         }
         else
         {
             if ( handler->chat_message != NULL )
-                event = handler->chat_message(handler->plugin, old_event, buddy, message);
+                event = handler->chat_message(handler->plugin, old_event, conv, buddy, message);
         }
 
         if ( ( event != NULL ) && ( event != old_event ) )

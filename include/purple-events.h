@@ -55,8 +55,8 @@ typedef gpointer (*PurpleEventsIdleBackFunc)(PurplePlugin *plugin, gpointer even
 typedef gpointer (*PurpleEventsImMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
 typedef gpointer (*PurpleEventsImActionFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
 
-typedef gpointer (*PurpleEventsChatMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
-typedef gpointer (*PurpleEventsChatActionFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
+typedef gpointer (*PurpleEventsChatMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *message);
+typedef gpointer (*PurpleEventsChatActionFunc)(PurplePlugin *plugin, gpointer event, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *message);
 
 typedef void (*PurpleEventsEndEventFunc)(PurplePlugin *plugin, gpointer event);
 

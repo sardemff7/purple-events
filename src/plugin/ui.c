@@ -42,55 +42,55 @@ purple_events_ui_get_pref_frame(PurplePlugin *plugin)
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/events/message",
+        "/plugins/core/events/events/message",
         _("Messages")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/events/action",
+        "/plugins/core/events/events/action",
         _("Actions (/me messages)")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/events/signed-on",
+        "/plugins/core/events/events/signed-on",
         _("Buddy signing on")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/events/signed-off",
+        "/plugins/core/events/events/signed-off",
         _("Buddy signing off")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/events/away",
+        "/plugins/core/events/events/away",
         _("Buddy going away")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/events/idle",
+        "/plugins/core/events/events/idle",
         _("Buddy going idle")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/events/back",
+        "/plugins/core/events/events/back",
         _("Buddy coming back")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/events/status-message",
+        "/plugins/core/events/events/status-message",
         _("Status message change (or removal)")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/events/specials",
+        "/plugins/core/events/events/specials",
         _("Special events")
     );
     purple_plugin_pref_frame_add(frame, pref);
@@ -101,19 +101,19 @@ purple_events_ui_get_pref_frame(PurplePlugin *plugin)
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/restrictions/blocked",
+        "/plugins/core/events/restrictions/blocked",
         _("Even for a blocked buddy")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/restrictions/new-conv-only",
+        "/plugins/core/events/restrictions/new-conv-only",
         _("Only from new conversation")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/eventc/restrictions/only-available",
+        "/plugins/core/events/restrictions/only-available",
         _("Only when available")
     );
     purple_plugin_pref_frame_add(frame, pref);

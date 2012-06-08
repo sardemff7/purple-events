@@ -1,0 +1,156 @@
+# German translations for purple-events package
+# Deutsche Übersetzung für purple-events.
+# This file is distributed under the same license as the purple-events package.
+# Quadratrund <quadratrund@web.de>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: purple-events 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-07 20:07+0200\n"
+"PO-Revision-Date: 2012-06-06 13:13+0200\n"
+"Last-Translator: Quadratrund <quadratrund@web.de>\n"
+"Language-Team: Deutsch\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: ../src/plugin/events.c:84
+msgid "Events handling"
+msgstr "Ereignisbehandlung"
+
+#: ../src/plugin/events.c:85
+msgid "Allows to set a fine-grained event handling"
+msgstr "Erlaubt sehr individuell einstellbare Ereignisbehandlung"
+
+#: ../src/plugin/events.c:86
+msgid "This plugin should be used as a base for event-based plugins"
+msgstr ""
+"Dieses Plugin sollte als Basis für Ereignis-basierte Plugins verwendet werden"
+
+#: ../src/plugin/ui.c:40
+msgid "Events:"
+msgstr "Ereignisse:"
+
+#: ../src/plugin/ui.c:46 ../src/plugin/ui.c:181
+msgid "Messages"
+msgstr "Nachrichten"
+
+#: ../src/plugin/ui.c:52 ../src/plugin/ui.c:182
+msgid "Actions (/me messages)"
+msgstr "Aktionen (/me-Nachrichten)"
+
+#: ../src/plugin/ui.c:58 ../src/plugin/ui.c:183
+msgid "Buddy signing on"
+msgstr "Kontakt meldet sich an"
+
+#: ../src/plugin/ui.c:64 ../src/plugin/ui.c:184
+msgid "Buddy signing off"
+msgstr "Kontakt meldet sich ab"
+
+#: ../src/plugin/ui.c:70 ../src/plugin/ui.c:185
+msgid "Buddy going away"
+msgstr "Abwesenheit eines Kontaktes"
+
+#: ../src/plugin/ui.c:76 ../src/plugin/ui.c:186
+msgid "Buddy going idle"
+msgstr "Untätigkeit eines Kontaktes"
+
+#: ../src/plugin/ui.c:82 ../src/plugin/ui.c:187
+msgid "Buddy coming back"
+msgstr "Kontakt ist wieder anwesend"
+
+#: ../src/plugin/ui.c:88 ../src/plugin/ui.c:188
+msgid "Status message change (or removal)"
+msgstr "Änderung der Statusnachricht"
+
+#: ../src/plugin/ui.c:94 ../src/plugin/ui.c:189
+msgid "Special events"
+msgstr "Spezielle Ereignisse"
+
+#: ../src/plugin/ui.c:99
+msgid "Restrictions:"
+msgstr "Einschränkungen:"
+
+#: ../src/plugin/ui.c:105
+msgid "Even for a blocked buddy"
+msgstr "Auch für blockierte Kontakte"
+
+#: ../src/plugin/ui.c:111
+msgid "Only from new conversation"
+msgstr "Nur für neue Konversationen"
+
+#: ../src/plugin/ui.c:117
+msgid "Only when available"
+msgstr "Nur wenn ich anwesend bin"
+
+#: ../src/plugin/ui.c:123
+#, fuzzy
+msgid ""
+"Stack events (do not ignore a buddy action if an event is already attached "
+"to)"
+msgstr ""
+"Alle Benachrichtigungen anzeigen, wenn ein Kontakt mehrere kurz "
+"hintereinander erzeugt"
+
+#: ../src/plugin/ui.c:244
+msgid "Events selection"
+msgstr "Ereignisauswahl"
+
+#: ../src/plugin/ui.c:245
+msgid "Select events for contact"
+msgstr "Ereignisse für Kontakt auswählen"
+
+#: ../src/plugin/ui.c:245
+msgid "Select events for group"
+msgstr "Ereignisse für Gruppe auswählen"
+
+#: ../src/plugin/ui.c:248
+msgid "_Set events for contact"
+msgstr "Ereignisse für Kontakt _festlegen"
+
+#: ../src/plugin/ui.c:248
+msgid "_Set events for group"
+msgstr "Ereignisse für Gruppe _festlegen"
+
+#: ../src/plugin/ui.c:250
+msgid "_Cancel"
+msgstr "_Abbrechen"
+
+#: ../src/plugin/ui.c:280
+msgid "Use global settings"
+msgstr "globale Einstellungen verwenden"
+
+#: ../src/plugin/ui.c:282
+msgid "Use group settings"
+msgstr "Einstellungen der Gruppe verwenden"
+
+#: ../src/plugin/ui.c:288
+msgid "Disable all events"
+msgstr "alle Ereignisse abschalten"
+
+#: ../src/plugin/ui.c:292
+msgid "Select events"
+msgstr "Ereignisse auswählen"
+
+#: ../src/plugin/ui.c:298
+msgid "Current events: all disabled"
+msgstr "Aktuell: alle Ereignisse abgeschaltet"
+
+#: ../src/plugin/ui.c:302
+msgid "Current events: global settings"
+msgstr "Aktuell: globale Einstellungen"
+
+#: ../src/plugin/ui.c:304
+msgid "Current events: group settings"
+msgstr "Aktuell: Einstellungen der Gruppe"
+
+#: ../src/plugin/ui.c:307
+msgid "Current events: selection"
+msgstr "Aktuell: individuelle Auswahl"
+
+#: ../src/plugin/ui.c:315
+msgid "Events"
+msgstr "Ereignisse"

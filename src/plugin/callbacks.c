@@ -382,6 +382,48 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
 
 
 void
+purple_events_callback_email_notification(const gchar *subject, const gchar *from, const gchar *to, const gchar *url, PurpleEventsContext *context)
+{
+    if ( ! purple_prefs_get_bool("/plugins/core/events/events/emails") )
+        return;
+
+    PurpleEventsHandler *handler;
+    GList *handler_;
+    for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
+    {
+        handler = handler_->data;
+
+        if ( handler->email != NULL )
+            handler->email(handler->plugin, subject, from, to, url);
+    }
+}
+
+void
+purple_events_callback_emails_notification(const gchar **subject, const gchar **from, const gchar **to, const gchar **url, guint count, PurpleEventsContext *context)
+{
+    if ( ! purple_prefs_get_bool("/plugins/core/events/events/emails") )
+        return;
+
+    if ( ! purple_prefs_get_bool("/plugins/core/events/restrictions/stack-emails") )
+        count = 1;
+
+    PurpleEventsHandler *handler;
+    GList *handler_;
+    guint i;
+    for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
+    {
+        handler = handler_->data;
+
+        if ( handler->email != NULL )
+        {
+            for ( i = 0 ; i < count ; ++i )
+                handler->email(handler->plugin, subject[i], from[i], to[i], url[i]);
+        }
+    }
+}
+
+
+void
 purple_events_callback_conversation_updated(PurpleConversation *conv, PurpleConvUpdateType type, PurpleEventsContext *context)
 {
     PurpleEventsHandler *handler;

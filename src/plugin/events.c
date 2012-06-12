@@ -103,12 +103,14 @@ _purple_events_init(PurplePlugin *plugin)
     purple_prefs_add_bool("/plugins/core/events/events/back", TRUE);
     purple_prefs_add_bool("/plugins/core/events/events/status-message", FALSE);
     purple_prefs_add_bool("/plugins/core/events/events/specials", FALSE);
+    purple_prefs_add_bool("/plugins/core/events/events/emails", TRUE);
 
     purple_prefs_add_none("/plugins/core/events/restrictions");
     purple_prefs_add_bool("/plugins/core/events/restrictions/blocked", TRUE);
     purple_prefs_add_bool("/plugins/core/events/restrictions/new-conv-only", FALSE);
     purple_prefs_add_bool("/plugins/core/events/restrictions/only-available", FALSE);
     purple_prefs_add_bool("/plugins/core/events/restrictions/stack-events", FALSE);
+    purple_prefs_add_bool("/plugins/core/events/restrictions/stack-emails", FALSE);
 }
 
 static void
@@ -128,6 +130,7 @@ _purple_events_load(PurplePlugin *plugin)
     void *conv_handle = purple_conversations_get_handle();
     void *blist_handle = purple_blist_get_handle();
     void *conn_handle = purple_connections_get_handle();
+    void *notify_handle = purple_notify_get_handle();
 
     purple_signal_connect(
         blist_handle, "buddy-signed-on", plugin,
@@ -157,6 +160,17 @@ _purple_events_load(PurplePlugin *plugin)
     purple_signal_connect(
         conv_handle, "received-chat-msg", plugin,
         (PurpleCallback)purple_events_callback_new_chat_msg, plugin->extra
+    );
+
+
+    purple_signal_connect(
+        notify_handle, "displaying-email-notification", plugin,
+        (PurpleCallback)purple_events_callback_email_notification, plugin->extra
+    );
+
+    purple_signal_connect(
+        notify_handle, "displaying-emails-notification", plugin,
+        (PurpleCallback)purple_events_callback_emails_notification, plugin->extra
     );
 
 

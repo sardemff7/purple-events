@@ -59,7 +59,7 @@ static PurplePluginInfo _purple_events_plugin_info = {
     .summary        = NULL,
     .description    = NULL,
     .author         = "Quentin \"Sardem FF7\" Glidic <sardemff7+pidgin@sardemff7.net>",
-    .homepage       = "http://sardemff7.github.com/" PACKAGE_TARNAME "/",
+    .homepage       = "http://" PACKAGE_TARNAME ".sardemff7.net/",
 
     .load           = _purple_events_load,
     .unload         = _purple_events_unload,

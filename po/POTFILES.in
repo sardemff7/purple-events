@@ -1,2 +1,3 @@
 src/plugin/events.c
 src/plugin/ui.c
+src/plugin-exec/exec.c

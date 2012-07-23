@@ -86,6 +86,30 @@ purple_events_la_LIBADD = \
 	$(PURPLE_LIBS) \
 	$(GLIB_LIBS)
 
+# Exec “sample” plugin
+plugin_LTLIBRARIES += \
+	purple-events-exec.la
+
+purple_events_exec_la_SOURCES = \
+	include/config.h \
+	include/purple-events.h \
+	src/plugin-exec/exec.c
+
+purple_events_exec_la_CFLAGS = \
+	$(AM_CFLAGS) \
+	$(PURPLE_CFLAGS) \
+	$(GLIB_CFLAGS)
+
+purple_events_exec_la_LDFLAGS = \
+	-no-undefined \
+	-avoid-version -module \
+	-export-symbols-regex 'purple_init_(purple_events_exec_)?plugin'
+
+purple_events_exec_la_LIBADD = \
+	libpurple-events.la \
+	$(PURPLE_LIBS) \
+	$(GLIB_LIBS)
+
 
 #
 # Hooks

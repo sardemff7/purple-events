@@ -401,7 +401,7 @@ purple_events_callback_email_notification(const gchar *subject, const gchar *fro
 void
 purple_events_callback_emails_notification(const gchar **subject, const gchar **from, const gchar **to, const gchar **url, guint count, PurpleEventsContext *context)
 {
-    if ( ! purple_prefs_get_bool("/plugins/core/events/events/emails") )
+    if ( ( count == 0 ) || ( ! purple_prefs_get_bool("/plugins/core/events/events/emails") ) )
         return;
 
     if ( ! purple_prefs_get_bool("/plugins/core/events/restrictions/stack-emails") )

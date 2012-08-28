@@ -471,7 +471,7 @@ _purple_events_callback_account_signed_on_timeout(gpointer user_data)
 
     if ( ( purple_account_get_connection(data->account) != NULL ) && ( ! purple_account_is_connected(data->account) ) )
         return TRUE;
-    data->context->just_signed_on_accounts = g_list_remove(data->context->just_signed_on_accounts, data->account);
+    data->context->just_signed_on_accounts = g_list_remove(data->context->just_signed_on_accounts, data);
 
     g_free(data);
 

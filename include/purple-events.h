@@ -53,10 +53,8 @@ typedef gpointer (*PurpleEventsIdleFunc)(PurplePlugin *plugin, gpointer event, P
 typedef gpointer (*PurpleEventsIdleBackFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy);
 
 typedef gpointer (*PurpleEventsImMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
-typedef gpointer (*PurpleEventsImActionFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
 
 typedef gpointer (*PurpleEventsChatMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *message);
-typedef gpointer (*PurpleEventsChatActionFunc)(PurplePlugin *plugin, gpointer event, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *message);
 
 typedef void (*PurpleEventsEmailFunc)(PurplePlugin *plugin, const gchar *subject, const gchar *from, const gchar *to, const gchar *url);
 
@@ -84,9 +82,11 @@ PURPLE_EVENTS_HANDLER_ADD_CALLBACK(special, Special);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(idle, Idle);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(idle_back, IdleBack);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_message, ImMessage);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_action, ImAction);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_highlight, ImMessage);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_action, ImMessage);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_message, ChatMessage);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_action, ChatAction);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_highlight, ChatMessage);
+PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_action, ChatMessage);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(email, Email);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(end_event, EndEvent);
 

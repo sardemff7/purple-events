@@ -284,6 +284,10 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
     if ( ( conv != NULL ) && purple_prefs_get_bool("/plugins/core/events/restrictions/new-conv-only") )
         return;
 
+    gboolean highlight;
+
+    highlight = flags & PURPLE_MESSAGE_NICK;
+
     gboolean action;
     gchar *stripped_message;
 
@@ -291,7 +295,7 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
     action = g_str_has_prefix(stripped_message, "/me ");
     g_free(stripped_message);
 
-    if ( ! purple_events_utils_check_event_dispatch(context, buddy, action ? "action" : "message") )
+    if ( ! purple_events_utils_check_event_dispatch(context, buddy, highlight ? "highlight" : action ? "action" : "message") )
         return;
 
     gboolean stack;
@@ -314,7 +318,12 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
         if ( ( ! stack ) && ( events != NULL ) )
             old_event = events->data;
 
-        if ( action )
+        if ( highlight )
+        {
+            if ( handler->im_highlight != NULL )
+                event = handler->im_highlight(handler->plugin, old_event, buddy, message);
+        }
+        else if ( action )
         {
             if ( handler->im_action != NULL )
                 event = handler->im_action(handler->plugin, old_event, buddy, message);
@@ -337,6 +346,10 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
     if ( buddy == NULL )
         return;
 
+    gboolean highlight;
+
+    highlight = flags & PURPLE_MESSAGE_NICK;
+
     gboolean action;
     gchar *stripped_message;
 
@@ -344,7 +357,7 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
     action = g_str_has_prefix(stripped_message, "/me ");
     g_free(stripped_message);
 
-    if ( ! purple_events_utils_check_event_dispatch(context, buddy, action ? "action" : "message") )
+    if ( ! purple_events_utils_check_event_dispatch(context, buddy, highlight ? "highlight" : action ? "action" : "message") )
         return;
 
     gboolean stack;
@@ -364,7 +377,12 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
         if ( ( ! stack ) && ( events != NULL ) )
             old_event = events->data;
 
-        if ( action )
+        if ( highlight )
+        {
+            if ( handler->chat_highlight != NULL )
+                event = handler->chat_highlight(handler->plugin, old_event, conv, buddy, message);
+        }
+        else if ( action )
         {
             if ( handler->chat_action != NULL )
                 event = handler->chat_action(handler->plugin, old_event, conv, buddy, message);

@@ -340,7 +340,7 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
 }
 
 void
-purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender, const gchar *message, PurpleConversation *conv, PurpleEventsContext *context)
+purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender, const gchar *message, PurpleConversation *conv, PurpleMessageFlags flags, PurpleEventsContext *context)
 {
     PurpleBuddy *buddy = purple_find_buddy(account, sender);
     if ( buddy == NULL )

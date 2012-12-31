@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purple-events 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-07 20:07+0200\n"
+"POT-Creation-Date: 2012-12-31 18:34+0100\n"
 "PO-Revision-Date: 2012-06-04 23:40+0200\n"
 "Last-Translator: Quentin Glidic <sardemff7+pidgin@sardemff7.net>\n"
 "Language-Team: French\n"
@@ -50,59 +50,79 @@ msgstr ""
 msgid "Events:"
 msgstr "Événements :"
 
-#: ../src/plugin/ui.c:46 ../src/plugin/ui.c:181
+#: ../src/plugin/ui.c:46 ../src/plugin/ui.c:218 ../src/plugin-exec/exec.c:144
 msgid "Messages"
 msgstr "Messages"
 
-#: ../src/plugin/ui.c:52 ../src/plugin/ui.c:182
+#: ../src/plugin/ui.c:52 ../src/plugin/ui.c:219
+msgid "Highlights"
+msgstr "Surbrillance"
+
+#: ../src/plugin/ui.c:58 ../src/plugin/ui.c:220 ../src/plugin-exec/exec.c:150
 msgid "Actions (/me messages)"
 msgstr "Action (messages /me)"
 
-#: ../src/plugin/ui.c:58 ../src/plugin/ui.c:183
+#: ../src/plugin/ui.c:64
+msgid "Anonymous (non-buddy) messages"
+msgstr "Messages anonymes (de non-contacts)"
+
+#: ../src/plugin/ui.c:70
+msgid "Anonymous highlights"
+msgstr "Surbrillance anonyme"
+
+#: ../src/plugin/ui.c:76
+msgid "Anonymous actions (/me messages)"
+msgstr "Action anonymes (messages /me)"
+
+#: ../src/plugin/ui.c:82 ../src/plugin/ui.c:221 ../src/plugin-exec/exec.c:156
 msgid "Buddy signing on"
 msgstr "Connexion d’un contact"
 
-#: ../src/plugin/ui.c:64 ../src/plugin/ui.c:184
+#: ../src/plugin/ui.c:88 ../src/plugin/ui.c:222 ../src/plugin-exec/exec.c:162
 msgid "Buddy signing off"
 msgstr "Déconnexion d’un contact"
 
-#: ../src/plugin/ui.c:70 ../src/plugin/ui.c:185
+#: ../src/plugin/ui.c:94 ../src/plugin/ui.c:223 ../src/plugin-exec/exec.c:168
 msgid "Buddy going away"
 msgstr "Absence d’un contact"
 
-#: ../src/plugin/ui.c:76 ../src/plugin/ui.c:186
+#: ../src/plugin/ui.c:100 ../src/plugin/ui.c:224 ../src/plugin-exec/exec.c:174
 msgid "Buddy going idle"
 msgstr "Inactivité d’un contact"
 
-#: ../src/plugin/ui.c:82 ../src/plugin/ui.c:187
+#: ../src/plugin/ui.c:106 ../src/plugin/ui.c:225 ../src/plugin-exec/exec.c:180
 msgid "Buddy coming back"
 msgstr "Retour d’un contact"
 
-#: ../src/plugin/ui.c:88 ../src/plugin/ui.c:188
+#: ../src/plugin/ui.c:112 ../src/plugin/ui.c:226 ../src/plugin-exec/exec.c:186
 msgid "Status message change (or removal)"
 msgstr "Changement (ou suppression) du message de statut"
 
-#: ../src/plugin/ui.c:94 ../src/plugin/ui.c:189
+#: ../src/plugin/ui.c:118 ../src/plugin/ui.c:227 ../src/plugin-exec/exec.c:192
 msgid "Special events"
 msgstr "Événements spéciaux"
 
-#: ../src/plugin/ui.c:99
+#: ../src/plugin/ui.c:124 ../src/plugin-exec/exec.c:198
+msgid "E-mails"
+msgstr "E-mails"
+
+#: ../src/plugin/ui.c:129
 msgid "Restrictions:"
 msgstr "Restrictions :"
 
-#: ../src/plugin/ui.c:105
+#: ../src/plugin/ui.c:135
 msgid "Even for a blocked buddy"
 msgstr "Même pour un contact bloqué"
 
-#: ../src/plugin/ui.c:111
+#: ../src/plugin/ui.c:141
 msgid "Only from new conversation"
 msgstr "Seulement pour les nouvelles conversations"
 
-#: ../src/plugin/ui.c:117
+#: ../src/plugin/ui.c:147
 msgid "Only when available"
 msgstr "Seulement si je suis disponible"
 
-#: ../src/plugin/ui.c:123
+#: ../src/plugin/ui.c:153
 msgid ""
 "Stack events (do not ignore a buddy action if an event is already attached "
 "to)"
@@ -110,62 +130,78 @@ msgstr ""
 "Empiler les événements (ne pas ignorer une action d’un contact si un "
 "événements le concerne déjà)"
 
-#: ../src/plugin/ui.c:244
+#: ../src/plugin/ui.c:159
+msgid "Display all e-mail notifications if multiple e-mails"
+msgstr "Afficher toutes les notifications d’e-mail si plusieurs"
+
+#: ../src/plugin/ui.c:282
 msgid "Events selection"
 msgstr "Sélection des événements"
 
-#: ../src/plugin/ui.c:245
+#: ../src/plugin/ui.c:283
 msgid "Select events for contact"
 msgstr "Sélectionnez les événements pour le contact"
 
-#: ../src/plugin/ui.c:245
+#: ../src/plugin/ui.c:283
 msgid "Select events for group"
 msgstr "Sélectionnez les événements pour le groupe"
 
-#: ../src/plugin/ui.c:248
+#: ../src/plugin/ui.c:286
 msgid "_Set events for contact"
 msgstr "_Choisir les événements pour le contact"
 
-#: ../src/plugin/ui.c:248
+#: ../src/plugin/ui.c:286
 msgid "_Set events for group"
 msgstr "_Choisir les événements pour le groupe"
 
-#: ../src/plugin/ui.c:250
+#: ../src/plugin/ui.c:288
 msgid "_Cancel"
 msgstr "_Annuler"
 
-#: ../src/plugin/ui.c:280
+#: ../src/plugin/ui.c:318
 msgid "Use global settings"
 msgstr "Utiliser les réglages globaux"
 
-#: ../src/plugin/ui.c:282
+#: ../src/plugin/ui.c:320
 msgid "Use group settings"
 msgstr "Utiliser les réglages du groupe"
 
-#: ../src/plugin/ui.c:288
+#: ../src/plugin/ui.c:326
 msgid "Disable all events"
 msgstr "Désactiver tous les événements"
 
-#: ../src/plugin/ui.c:292
+#: ../src/plugin/ui.c:330
 msgid "Select events"
 msgstr "Sélectionner les événements"
 
-#: ../src/plugin/ui.c:298
+#: ../src/plugin/ui.c:336
 msgid "Current events: all disabled"
 msgstr "Événements actuels : tous désactivés"
 
-#: ../src/plugin/ui.c:302
+#: ../src/plugin/ui.c:340
 msgid "Current events: global settings"
 msgstr "Événements actuels : réglages globaux"
 
-#: ../src/plugin/ui.c:304
+#: ../src/plugin/ui.c:342
 msgid "Current events: group settings"
 msgstr "Événements actuels : réglages de groupe"
 
-#: ../src/plugin/ui.c:307
+#: ../src/plugin/ui.c:345
 msgid "Current events: selection"
 msgstr "Événements actuels : sélection"
 
-#: ../src/plugin/ui.c:315
+#: ../src/plugin/ui.c:353
 msgid "Events"
 msgstr "Événements"
+
+#: ../src/plugin-exec/exec.c:138
+msgid "Events commands:"
+msgstr "Commandes d’événements"
+
+#: ../src/plugin-exec/exec.c:252
+msgid "Events to order"
+msgstr "Événements à la commande"
+
+#: ../src/plugin-exec/exec.c:253
+msgid "Exec a command on specific event"
+msgstr "Exécute une commande pour un événement"

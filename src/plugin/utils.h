@@ -28,7 +28,8 @@
 G_BEGIN_DECLS
 
 
-gboolean purple_events_utils_check_event_dispatch(PurpleEventsContext *context, PurpleBuddy *buddy, const gchar *event);
+gboolean purple_events_utils_check_event_dispatch(PurpleEventsContext *context, PurpleAccount *account, PurpleConversation *conv, const gchar *event);
+gboolean purple_events_utils_check_buddy_event_dispatch(PurpleEventsContext *context, PurpleBuddy *buddy, const gchar *event);
 
 
 G_END_DECLS

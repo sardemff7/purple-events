@@ -39,6 +39,12 @@ typedef enum
 	PURPLE_EVENTS_UTILS_ICON_FORMAT_PNG,
 } PurpleEventsUtilsIconFormat;
 
+typedef enum
+{
+    PURPLE_EVENTS_MESSAGE_TYPE_NORMAL,
+    PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT,
+    PURPLE_EVENTS_MESSAGE_TYPE_ACTION
+} PurpleEventsMessageType;
 
 typedef gpointer (*PurpleEventsSignedOnFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy);
 typedef gpointer (*PurpleEventsSignedOffFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy);
@@ -52,9 +58,8 @@ typedef gpointer (*PurpleEventsSpecialFunc)(PurplePlugin *plugin, gpointer event
 typedef gpointer (*PurpleEventsIdleFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy);
 typedef gpointer (*PurpleEventsIdleBackFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy);
 
-typedef gpointer (*PurpleEventsImMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleBuddy *buddy, const gchar *message);
-
-typedef gpointer (*PurpleEventsChatMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *message);
+typedef gpointer (*PurpleEventsImMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleEventsMessageType type, PurpleBuddy *buddy, const gchar *sender, const gchar *message);
+typedef gpointer (*PurpleEventsChatMessageFunc)(PurplePlugin *plugin, gpointer event, PurpleEventsMessageType type, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *sender, const gchar *message);
 
 typedef void (*PurpleEventsEmailFunc)(PurplePlugin *plugin, const gchar *subject, const gchar *from, const gchar *to, const gchar *url);
 
@@ -82,11 +87,7 @@ PURPLE_EVENTS_HANDLER_ADD_CALLBACK(special, Special);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(idle, Idle);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(idle_back, IdleBack);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_message, ImMessage);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_highlight, ImMessage);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_action, ImMessage);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_message, ChatMessage);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_highlight, ChatMessage);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_action, ChatMessage);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(email, Email);
 PURPLE_EVENTS_HANDLER_ADD_CALLBACK(end_event, EndEvent);
 

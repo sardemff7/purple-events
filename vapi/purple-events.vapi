@@ -36,6 +36,14 @@ namespace PurpleEvents
         PNG,
     }
 
+    [CCode (cheader_filename = "purple-events.h")]
+    public enum MessageType
+    {
+        NORMAL,
+        HIGHLIGHT,
+        ACTION,
+    }
+
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
     public delegate void SignedOnFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy);
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
@@ -57,14 +65,9 @@ namespace PurpleEvents
     public delegate void IdleBackFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy);
 
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void ImMessageFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy, string message);
+    public delegate void ImMessageFunc(Purple.Plugin plugin, void *event, MessageType type, Purple.Buddy? buddy, string sender, string message);
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void ImActionFunc(Purple.Plugin plugin, void *event, Purple.Buddy buddy, string message);
-
-    [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void ChatMessageFunc(Purple.Plugin plugin, void *event, Purple.Conversation conv, Purple.Buddy buddy, string message);
-    [CCode (cheader_filename = "purple-events.h", has_target = false)]
-    public delegate void ChatActionFunc(Purple.Plugin plugin, void *event, Purple.Conversation conv, Purple.Buddy buddy, string message);
+    public delegate void ChatMessageFunc(Purple.Plugin plugin, void *event, MessageType type, Purple.Conversation conv, Purple.Buddy? buddy, string sender, string message);
 
     [CCode (cheader_filename = "purple-events.h", has_target = false)]
     public delegate void EndEventFunc(Purple.Plugin plugin, void *event);
@@ -89,10 +92,7 @@ namespace PurpleEvents
         public void add_idle_back_callback(IdleBackFunc @callback);
 
         public void add_im_message_callback(ImMessageFunc @callback);
-        public void add_im_action_callback(ImActionFunc @callback);
-
-        public void add_chat_message_callback(ChatActionFunc @callback);
-        public void add_chat_action_callback(ChatMessageFunc @callback);
+        public void add_chat_message_callback(ChatMessageFunc @callback);
 
         public void add_end_event_callback(EndEventFunc @callback);
     }

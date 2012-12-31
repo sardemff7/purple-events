@@ -45,12 +45,8 @@ struct _PurpleEventsHandler {
 	PurpleEventsIdleBackFunc idle_back;
 
 	PurpleEventsImMessageFunc im_message;
-	PurpleEventsImMessageFunc im_highlight;
-	PurpleEventsImMessageFunc im_action;
 
 	PurpleEventsChatMessageFunc chat_message;
-	PurpleEventsChatMessageFunc chat_highlight;
-	PurpleEventsChatMessageFunc chat_action;
 
 	PurpleEventsEmailFunc email;
 

@@ -60,6 +60,24 @@ purple_events_ui_get_pref_frame(PurplePlugin *plugin)
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
+        "/plugins/core/events/events/anonymous-message",
+        _("Anonymous (non-buddy) messages")
+    );
+    purple_plugin_pref_frame_add(frame, pref);
+
+    pref = purple_plugin_pref_new_with_name_and_label(
+        "/plugins/core/events/events/anonymous-highlight",
+        _("Anonymous highlights")
+    );
+    purple_plugin_pref_frame_add(frame, pref);
+
+    pref = purple_plugin_pref_new_with_name_and_label(
+        "/plugins/core/events/events/anonymous-action",
+        _("Anonymous actions (/me messages)")
+    );
+    purple_plugin_pref_frame_add(frame, pref);
+
+    pref = purple_plugin_pref_new_with_name_and_label(
         "/plugins/core/events/events/signed-on",
         _("Buddy signing on")
     );

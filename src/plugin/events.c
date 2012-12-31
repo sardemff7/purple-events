@@ -97,6 +97,9 @@ _purple_events_init(PurplePlugin *plugin)
     purple_prefs_add_bool("/plugins/core/events/events/message", TRUE);
     purple_prefs_add_bool("/plugins/core/events/events/highlight", TRUE);
     purple_prefs_add_bool("/plugins/core/events/events/action", TRUE);
+    purple_prefs_add_bool("/plugins/core/events/events/anonymous-message", FALSE);
+    purple_prefs_add_bool("/plugins/core/events/events/anonymous-highlight", FALSE);
+    purple_prefs_add_bool("/plugins/core/events/events/anonymous-action", FALSE);
     purple_prefs_add_bool("/plugins/core/events/events/signed-on", TRUE);
     purple_prefs_add_bool("/plugins/core/events/events/signed-off", FALSE);
     purple_prefs_add_bool("/plugins/core/events/events/away", TRUE);

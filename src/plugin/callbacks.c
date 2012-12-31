@@ -36,7 +36,7 @@
 void
 purple_events_callback_signed_on(PurpleBuddy *buddy, PurpleEventsContext *context)
 {
-    if ( ! purple_events_utils_check_event_dispatch(context, buddy, "signed-on") )
+    if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "signed-on") )
         return;
 
     gboolean stack;
@@ -70,7 +70,7 @@ purple_events_callback_signed_on(PurpleBuddy *buddy, PurpleEventsContext *contex
 void
 purple_events_callback_signed_off(PurpleBuddy *buddy, PurpleEventsContext *context)
 {
-    if ( ! purple_events_utils_check_event_dispatch(context, buddy, "signed-off") )
+    if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "signed-off") )
         return;
 
     gboolean stack;
@@ -118,7 +118,7 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
 
     if ( purple_status_is_independent(old_status) )
     {
-        if ( ! purple_events_utils_check_event_dispatch(context, buddy, "specials") )
+        if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "specials") )
             return;
 
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
@@ -158,7 +158,7 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
     }
     else if ( old_avail && ( ! new_avail ) )
     {
-        if ( ! purple_events_utils_check_event_dispatch(context, buddy, "away") )
+        if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "away") )
             return;
 
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
@@ -182,7 +182,7 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
     }
     else if ( ( ! old_avail ) && new_avail )
     {
-        if ( ! purple_events_utils_check_event_dispatch(context, buddy, "back") )
+        if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "back") )
             return;
 
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
@@ -206,7 +206,7 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
     }
     else if ( g_strcmp0(msg, purple_status_get_attr_string(old_status, "message")) != 0 )
     {
-        if ( ! purple_events_utils_check_event_dispatch(context, buddy, "status-message") )
+        if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "status-message") )
             return;
 
         for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) )
@@ -235,7 +235,7 @@ purple_events_callback_idle_changed(PurpleBuddy *buddy, gboolean oldidle, gboole
 {
     if ( oldidle == newidle )
         return;
-    if ( ! purple_events_utils_check_event_dispatch(context, buddy, "idle") )
+    if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "idle") )
         return;
 
     gboolean stack;
@@ -278,11 +278,6 @@ void
 purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, const gchar *message, PurpleConversation *conv, PurpleMessageFlags flags, PurpleEventsContext *context)
 {
     PurpleBuddy *buddy = purple_find_buddy(account, sender);
-    if ( buddy == NULL )
-        return;
-
-    if ( ( conv != NULL ) && purple_prefs_get_bool("/plugins/core/events/restrictions/new-conv-only") )
-        return;
 
     gboolean highlight;
 
@@ -295,11 +290,22 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
     action = g_str_has_prefix(stripped_message, "/me ");
     g_free(stripped_message);
 
-    if ( ! purple_events_utils_check_event_dispatch(context, buddy, highlight ? "highlight" : action ? "action" : "message") )
+    if ( buddy == NULL )
+    {
+        if ( ! purple_events_utils_check_event_dispatch(context, account, conv, highlight ? "anonymous-highlight" : action ? "anonymous-action" : "anonymous-message") )
+            return;
+    }
+    else if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, highlight ? "highlight" : action ? "action" : "message") )
         return;
 
     gboolean stack;
     stack = purple_prefs_get_bool("/plugins/core/events/restrictions/stack-events");
+
+    PurpleEventsMessageType type = PURPLE_EVENTS_MESSAGE_TYPE_NORMAL;
+    if ( highlight )
+        type = PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT;
+    else if ( action )
+        type = PURPLE_EVENTS_MESSAGE_TYPE_ACTION;
 
     PurpleContact *contact;
     contact = purple_buddy_get_contact(buddy);
@@ -318,21 +324,8 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
         if ( ( ! stack ) && ( events != NULL ) )
             old_event = events->data;
 
-        if ( highlight )
-        {
-            if ( handler->im_highlight != NULL )
-                event = handler->im_highlight(handler->plugin, old_event, buddy, message);
-        }
-        else if ( action )
-        {
-            if ( handler->im_action != NULL )
-                event = handler->im_action(handler->plugin, old_event, buddy, message);
-        }
-        else
-        {
-            if ( handler->im_message != NULL )
-                event = handler->im_message(handler->plugin, old_event, buddy, message);
-        }
+        if ( handler->im_message != NULL )
+            event = handler->im_message(handler->plugin, old_event, type, buddy, sender, message);
 
         if ( ( event != NULL ) && ( event != old_event ) )
             g_hash_table_insert(handler->events, contact, g_list_prepend(events, event));
@@ -343,8 +336,6 @@ void
 purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender, const gchar *message, PurpleConversation *conv, PurpleMessageFlags flags, PurpleEventsContext *context)
 {
     PurpleBuddy *buddy = purple_find_buddy(account, sender);
-    if ( buddy == NULL )
-        return;
 
     gboolean highlight;
 
@@ -357,11 +348,22 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
     action = g_str_has_prefix(stripped_message, "/me ");
     g_free(stripped_message);
 
-    if ( ! purple_events_utils_check_event_dispatch(context, buddy, highlight ? "highlight" : action ? "action" : "message") )
+    if ( buddy == NULL )
+    {
+        if ( ! purple_events_utils_check_event_dispatch(context, account, conv, highlight ? "anonymous-highlight" : action ? "anonymous-action" : "anonymous-message") )
+            return;
+    }
+    else if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, highlight ? "highlight" : action ? "action" : "message") )
         return;
 
     gboolean stack;
     stack = purple_prefs_get_bool("/plugins/core/events/restrictions/stack-events");
+
+    PurpleEventsMessageType type = PURPLE_EVENTS_MESSAGE_TYPE_NORMAL;
+    if ( highlight )
+        type = PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT;
+    else if ( action )
+        type = PURPLE_EVENTS_MESSAGE_TYPE_ACTION;
 
     PurpleEventsHandler *handler;
     GList *handler_;
@@ -377,21 +379,8 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
         if ( ( ! stack ) && ( events != NULL ) )
             old_event = events->data;
 
-        if ( highlight )
-        {
-            if ( handler->chat_highlight != NULL )
-                event = handler->chat_highlight(handler->plugin, old_event, conv, buddy, message);
-        }
-        else if ( action )
-        {
-            if ( handler->chat_action != NULL )
-                event = handler->chat_action(handler->plugin, old_event, conv, buddy, message);
-        }
-        else
-        {
-            if ( handler->chat_message != NULL )
-                event = handler->chat_message(handler->plugin, old_event, conv, buddy, message);
-        }
+        if ( handler->chat_message != NULL )
+            event = handler->chat_message(handler->plugin, old_event, type, conv, buddy, sender, message);
 
         if ( ( event != NULL ) && ( event != old_event ) )
             g_hash_table_insert(handler->events, conv, g_list_prepend(events, event));

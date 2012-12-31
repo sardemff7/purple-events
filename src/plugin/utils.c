@@ -37,35 +37,60 @@ _purple_events_utils_find_just_signed_on_account(gconstpointer a, gconstpointer 
     return ( just_signed_on_account->account == b ) ? 0 : 1;
 }
 
-gboolean
-purple_events_utils_check_event_dispatch(PurpleEventsContext *context, PurpleBuddy *buddy, const gchar *event)
+static gint
+_purple_events_utils_check_global_event_dispatch(PurpleEventsContext *context, PurpleAccount *account, PurpleConversation *conv, const gchar *event)
 {
-    PurpleAccount *account = purple_buddy_get_account(buddy);
-
     if ( purple_prefs_get_bool("/plugins/core/events/restrictions/only-available") && ( ! purple_status_is_available(purple_account_get_active_status(account)) ) )
-        return FALSE;
+        return -1;
 
+    if ( ( conv != NULL ) && purple_conversation_has_focus(conv) )
+        return -1;
+
+    if ( g_list_find_custom(context->just_signed_on_accounts, account, _purple_events_utils_find_just_signed_on_account) != NULL )
+        return -1;
+
+    gchar *event_name;
+    gboolean r;
+
+    event_name = g_strconcat("/plugins/core/events/events/", event, NULL);
+    r = purple_prefs_get_bool(event_name);
+    g_free(event_name);
+
+    return r;
+}
+
+gboolean
+purple_events_utils_check_event_dispatch(PurpleEventsContext *context, PurpleAccount *account, PurpleConversation *conv, const gchar *event)
+{
+    return ( _purple_events_utils_check_global_event_dispatch(context, account, conv, event) > 0 );
+}
+
+gboolean
+purple_events_utils_check_buddy_event_dispatch(PurpleEventsContext *context, PurpleBuddy *buddy, const gchar *event)
+{
     const gchar *name = purple_buddy_get_name(buddy);
+    PurpleAccount *account = purple_buddy_get_account(buddy);
 
     if ( ( ! purple_privacy_check(account, name) ) && purple_prefs_get_bool("/plugins/core/events/restrictions/blocked") )
         return FALSE;
 
     PurpleConversation *conv = purple_find_conversation_with_account(PURPLE_CONV_TYPE_ANY, name, account);
-    if ( ( conv != NULL ) && purple_conversation_has_focus(conv) )
+
+    gint set;
+
+    set = purple_events_utils_check_event_dispatch(context, account, conv, event);
+    if ( set < 0 )
         return FALSE;
 
     PurpleContact *contact = purple_buddy_get_contact(buddy);
     PurpleGroup *group = purple_buddy_get_group(buddy);
 
-    if ( g_list_find_custom(context->just_signed_on_accounts, account, _purple_events_utils_find_just_signed_on_account) != NULL )
-        return FALSE;
-
     gchar *event_name;
-    gint set;
     gboolean r;
 
     event_name = g_strconcat("events/", event, NULL);
 
+    r = set;
     set = purple_blist_node_get_int(PURPLE_BLIST_NODE(contact), "events");
     if ( set < 0 )
         r = FALSE;
@@ -80,13 +105,6 @@ purple_events_utils_check_event_dispatch(PurpleEventsContext *context, PurpleBud
             r = ( purple_blist_node_get_int(PURPLE_BLIST_NODE(group), event_name) == 1 );
     }
     g_free(event_name);
-
-    if ( set == 0 )
-    {
-        event_name = g_strconcat("/plugins/core/events/events/", event, NULL);
-        r = purple_prefs_get_bool(event_name);
-        g_free(event_name);
-    }
 
     return r;
 }

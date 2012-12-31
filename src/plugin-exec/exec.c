@@ -87,27 +87,33 @@ _purple_events_exec_idle_back(PurplePlugin *plugin, gpointer unused, PurpleBuddy
 }
 
 static gpointer
-_purple_events_exec_im_message(PurplePlugin *plugin, gpointer unused, PurpleBuddy *buddy, const gchar *message)
+_purple_events_exec_im_message(PurplePlugin *plugin, gpointer event, PurpleEventsMessageType type, PurpleBuddy *buddy, const gchar *sender, const gchar *message)
 {
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
+    switch ( type )
+    {
+    case PURPLE_EVENTS_MESSAGE_TYPE_NORMAL:
+        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
+    case PURPLE_EVENTS_MESSAGE_TYPE_ACTION:
+        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/action"));
+    case PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT:
+        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
+    }
+    return NULL;
 }
 
 static gpointer
-_purple_events_exec_im_action(PurplePlugin *plugin, gpointer unused, PurpleBuddy *buddy, const gchar *message)
+_purple_events_exec_chat_message(PurplePlugin *plugin, gpointer event, PurpleEventsMessageType type, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *sender, const gchar *message)
 {
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/action"));
-}
-
-static gpointer
-_purple_events_exec_chat_message(PurplePlugin *plugin, gpointer unused, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *message)
-{
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
-}
-
-static gpointer
-_purple_events_exec_chat_action(PurplePlugin *plugin, gpointer unused, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *message)
-{
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/action"));
+    switch ( type )
+    {
+    case PURPLE_EVENTS_MESSAGE_TYPE_NORMAL:
+        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
+    case PURPLE_EVENTS_MESSAGE_TYPE_ACTION:
+        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/action"));
+    case PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT:
+        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
+    }
+    return NULL;
 }
 
 static void
@@ -265,10 +271,8 @@ _purple_events_exec_init(PurplePlugin *plugin)
     purple_events_handler_add_idle_back_callback(handler, _purple_events_exec_idle_back);
 
     purple_events_handler_add_im_message_callback(handler, _purple_events_exec_im_message);
-    purple_events_handler_add_im_action_callback(handler, _purple_events_exec_im_action);
 
     purple_events_handler_add_chat_message_callback(handler, _purple_events_exec_chat_message);
-    purple_events_handler_add_chat_action_callback(handler, _purple_events_exec_chat_action);
 
     purple_events_handler_add_email_callback(handler, _purple_events_exec_email);
 

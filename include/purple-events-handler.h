@@ -50,7 +50,7 @@ struct _PurpleEventsHandler {
 
 	PurpleEventsEmailFunc email;
 
-	PurpleEventsEndEventFunc end_event;
+	PurpleEventsConversationGotFocusFunc conversation_got_focus;
 };
 
 

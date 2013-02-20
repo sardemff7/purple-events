@@ -25,7 +25,7 @@
 #include <purple.h>
 #include <purple-events.h>
 
-static gpointer
+static void
 _purple_events_exec_exec(const gchar *command_line)
 {
     GError *error = NULL;
@@ -34,86 +34,88 @@ _purple_events_exec_exec(const gchar *command_line)
         g_warning("Couldn’t close notification: %s", error->message);
         g_clear_error(&error);
     }
-    return NULL;
-
 }
 
-static gpointer
-_purple_events_exec_signed_on(PurplePlugin *plugin, gpointer unused, PurpleBuddy *buddy)
+static void
+_purple_events_exec_signed_on(PurplePlugin *plugin, PurpleBuddy *buddy)
 {
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/signed-on"));
+    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/signed-on"));
 }
 
-static gpointer
-_purple_events_exec_signed_off(PurplePlugin *plugin, gpointer unused, PurpleBuddy *buddy)
+static void
+_purple_events_exec_signed_off(PurplePlugin *plugin, PurpleBuddy *buddy)
 {
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/signed-off"));
+    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/signed-off"));
 }
 
-static gpointer
-_purple_events_exec_away(PurplePlugin *plugin, gpointer unused, PurpleBuddy *buddy, const gchar *message)
+static void
+_purple_events_exec_away(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message)
 {
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/away"));
+    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/away"));
 }
 
-static gpointer
-_purple_events_exec_back(PurplePlugin *plugin, gpointer unused, PurpleBuddy *buddy, const gchar *message)
+static void
+_purple_events_exec_back(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message)
 {
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/back"));
+    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/back"));
 }
 
-static gpointer
-_purple_events_exec_status(PurplePlugin *plugin, gpointer unused, PurpleBuddy *buddy, const gchar *message)
+static void
+_purple_events_exec_status(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message)
 {
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/status-message"));
+    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/status-message"));
 }
 
-static gpointer
-_purple_events_exec_special(PurplePlugin *plugin, gpointer unused, PurpleBuddy *buddy, PurpleEventsEventSpecialType type, ...)
+static void
+_purple_events_exec_special(PurplePlugin *plugin, PurpleBuddy *buddy, PurpleEventsEventSpecialType type, ...)
 {
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/specials"));
+    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/specials"));
 }
 
-static gpointer
-_purple_events_exec_idle(PurplePlugin *plugin, gpointer unused, PurpleBuddy *buddy)
+static void
+_purple_events_exec_idle(PurplePlugin *plugin, PurpleBuddy *buddy)
 {
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/idle"));
+    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/idle"));
 }
 
-static gpointer
-_purple_events_exec_idle_back(PurplePlugin *plugin, gpointer unused, PurpleBuddy *buddy)
+static void
+_purple_events_exec_idle_back(PurplePlugin *plugin, PurpleBuddy *buddy)
 {
-    return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/idle"));
+    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/idle"));
 }
 
-static gpointer
-_purple_events_exec_im_message(PurplePlugin *plugin, gpointer event, PurpleEventsMessageType type, PurpleBuddy *buddy, const gchar *sender, const gchar *message)
+static void
+_purple_events_exec_im_message(PurplePlugin *plugin, PurpleEventsMessageType type, PurpleBuddy *buddy, const gchar *sender, const gchar *message)
 {
     switch ( type )
     {
     case PURPLE_EVENTS_MESSAGE_TYPE_NORMAL:
-        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
+        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
+    break;
     case PURPLE_EVENTS_MESSAGE_TYPE_ACTION:
-        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/action"));
+        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/action"));
+    break;
     case PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT:
-        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
+        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
+    break;
     }
-    return NULL;
 }
 
-static gpointer
-_purple_events_exec_chat_message(PurplePlugin *plugin, gpointer event, PurpleEventsMessageType type, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *sender, const gchar *message)
+static void
+_purple_events_exec_chat_message(PurplePlugin *plugin, PurpleEventsMessageType type, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *sender, const gchar *message)
 {
     switch ( type )
     {
     case PURPLE_EVENTS_MESSAGE_TYPE_NORMAL:
-        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
+        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
+    break;
     case PURPLE_EVENTS_MESSAGE_TYPE_ACTION:
-        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/action"));
+        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/action"));
+    break;
     case PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT:
-        return _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
+        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
+    break;
     }
-    return NULL;
 }
 
 static void
@@ -121,12 +123,6 @@ _purple_events_exec_email(PurplePlugin *plugin, const gchar *subject, const gcha
 {
     _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/emails"));
 }
-
-static void
-_notify_plus_end_event(PurplePlugin *plugin, gpointer event)
-{
-}
-
 
 static PurplePluginPrefFrame *
 _purple_events_exec_get_pref_frame(PurplePlugin *plugin)
@@ -275,8 +271,6 @@ _purple_events_exec_init(PurplePlugin *plugin)
     purple_events_handler_add_chat_message_callback(handler, _purple_events_exec_chat_message);
 
     purple_events_handler_add_email_callback(handler, _purple_events_exec_email);
-
-    purple_events_handler_add_end_event_callback(handler, _notify_plus_end_event);
 
     purple_prefs_add_none("/plugins/core/events-exec");
     purple_prefs_add_string("/plugins/core/events-exec/message", "");

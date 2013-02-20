@@ -38,11 +38,6 @@ purple_events_connect_handler(PurpleEventsHandler *handler)
 {
     g_return_if_fail(handler != NULL);
 
-    /*
-     * We check callbacks we really need
-     */
-    g_return_if_fail(handler->end_event != NULL);
-
     PurplePlugin *plugin;
     PurpleEventsContext *context;
 

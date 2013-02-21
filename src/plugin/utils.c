@@ -78,7 +78,7 @@ purple_events_utils_check_buddy_event_dispatch(PurpleEventsContext *context, Pur
 
     gint set;
 
-    set = purple_events_utils_check_event_dispatch(context, account, conv, event);
+    set = _purple_events_utils_check_global_event_dispatch(context, account, conv, event);
     if ( set < 0 )
         return FALSE;
 

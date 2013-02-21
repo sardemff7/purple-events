@@ -104,7 +104,6 @@ _purple_events_init(PurplePlugin *plugin)
     purple_prefs_add_bool("/plugins/core/events/events/idle", TRUE);
     purple_prefs_add_bool("/plugins/core/events/events/back", TRUE);
     purple_prefs_add_bool("/plugins/core/events/events/status-message", FALSE);
-    purple_prefs_add_bool("/plugins/core/events/events/specials", FALSE);
     purple_prefs_add_bool("/plugins/core/events/events/emails", TRUE);
 
     purple_prefs_add_none("/plugins/core/events/restrictions");

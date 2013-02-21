@@ -67,12 +67,6 @@ _purple_events_exec_status(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar
 }
 
 static void
-_purple_events_exec_special(PurplePlugin *plugin, PurpleBuddy *buddy, PurpleEventsEventSpecialType type, ...)
-{
-    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/specials"));
-}
-
-static void
 _purple_events_exec_idle(PurplePlugin *plugin, PurpleBuddy *buddy)
 {
     _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/idle"));
@@ -178,12 +172,6 @@ _purple_events_exec_get_pref_frame(PurplePlugin *plugin)
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/events-exec/specials",
-        _("Special events")
-    );
-    purple_plugin_pref_frame_add(frame, pref);
-
-    pref = purple_plugin_pref_new_with_name_and_label(
         "/plugins/core/events-exec/emails",
         _("E-mails")
     );
@@ -255,7 +243,6 @@ _purple_events_exec_init(PurplePlugin *plugin)
     purple_events_handler_add_back_callback(handler, _purple_events_exec_back);
 
     purple_events_handler_add_status_callback(handler, _purple_events_exec_status);
-    purple_events_handler_add_special_callback(handler, _purple_events_exec_special);
 
     purple_events_handler_add_idle_callback(handler, _purple_events_exec_idle);
     purple_events_handler_add_idle_back_callback(handler, _purple_events_exec_idle_back);
@@ -275,7 +262,6 @@ _purple_events_exec_init(PurplePlugin *plugin)
     purple_prefs_add_string("/plugins/core/events-exec/idle", "");
     purple_prefs_add_string("/plugins/core/events-exec/back", "");
     purple_prefs_add_string("/plugins/core/events-exec/status-message", "");
-    purple_prefs_add_string("/plugins/core/events-exec/specials", "");
     purple_prefs_add_string("/plugins/core/events-exec/emails", "");
 }
 

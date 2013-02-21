@@ -102,12 +102,6 @@ purple_events_ui_get_pref_frame(PurplePlugin *plugin)
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/events/events/specials",
-        _("Special events")
-    );
-    purple_plugin_pref_frame_add(frame, pref);
-
-    pref = purple_plugin_pref_new_with_name_and_label(
         "/plugins/core/events/events/emails",
         _("E-mails")
     );
@@ -196,7 +190,6 @@ static const gchar *_purple_events_ui_events[] =
     "events/idle",
     "events/back",
     "events/status-message",
-    "events/specials",
     NULL
 };
 
@@ -210,7 +203,6 @@ static const gchar *_purple_events_ui_events_labels[] =
     N_("Buddy going idle"),
     N_("Buddy coming back"),
     N_("Status message change (or removal)"),
-    N_("Special events"),
     NULL
 };
 

@@ -71,14 +71,9 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
     gboolean new_avail = purple_status_is_available(new_status);
     const gchar *msg = purple_status_get_attr_string(new_status, "message");
 
+    /* TODO: Add real events here
     if ( purple_status_is_independent(old_status) )
     {
-        if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "specials") )
-            return;
-
-        CALL_HANDLER(special, buddy, PURPLE_EVENTS_EVENT_SPECIAL_TYPE_NONE);
-
-        /* TODO: make it work
         foreach ( unowned PurpleStatusAttr attr in old_status.get_type().get_attrs() )
         {
             var name = attr.get_name();
@@ -92,9 +87,8 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
             break;
             }
         }
-        */
     }
-    else if ( old_avail && ( ! new_avail ) )
+    else */ if ( old_avail && ( ! new_avail ) )
     {
         if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "away") )
             return;

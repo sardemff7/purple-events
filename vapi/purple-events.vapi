@@ -86,7 +86,6 @@ namespace PurpleEvents
         public void add_back_callback(BackFunc @callback);
 
         public void add_status_callback(StatusFunc @callback);
-        public void add_special_callback(SpecialFunc @callback);
 
         public void add_idle_callback(IdleFunc @callback);
         public void add_idle_back_callback(IdleBackFunc @callback);

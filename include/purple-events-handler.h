@@ -39,7 +39,6 @@ struct _PurpleEventsHandler {
 	PurpleEventsBackFunc back;
 
 	PurpleEventsStatusFunc status;
-	PurpleEventsSpecialFunc special;
 
 	PurpleEventsIdleFunc idle;
 	PurpleEventsIdleBackFunc idle_back;

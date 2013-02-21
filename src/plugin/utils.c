@@ -24,8 +24,7 @@
 #include <glib.h>
 #include <purple.h>
 
-#include <purple-events-context.h>
-
+#include "context.h"
 #include "events.h"
 
 #include "utils.h"

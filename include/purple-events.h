@@ -29,66 +29,11 @@ G_BEGIN_DECLS
 
 typedef enum
 {
-    PURPLE_EVENTS_EVENT_SPECIAL_TYPE_NONE,
-    PURPLE_EVENTS_EVENT_SPECIAL_TYPE_TUNE,
-} PurpleEventsEventSpecialType;
-
-typedef enum
-{
 	PURPLE_EVENTS_UTILS_ICON_FORMAT_SVG,
 	PURPLE_EVENTS_UTILS_ICON_FORMAT_PNG,
 } PurpleEventsUtilsIconFormat;
 
-typedef enum
-{
-    PURPLE_EVENTS_MESSAGE_TYPE_NORMAL,
-    PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT
-} PurpleEventsMessageType;
-
-typedef void (*PurpleEventsSignedOnFunc)(PurplePlugin *plugin, PurpleBuddy *buddy);
-typedef void (*PurpleEventsSignedOffFunc)(PurplePlugin *plugin, PurpleBuddy *buddy);
-
-typedef void (*PurpleEventsAwayFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message);
-typedef void (*PurpleEventsBackFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message);
-
-typedef void (*PurpleEventsStatusFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message);
-typedef void (*PurpleEventsSpecialFunc)(PurplePlugin *plugin, PurpleBuddy *buddy, PurpleEventsEventSpecialType type, ...);
-
-typedef void (*PurpleEventsIdleFunc)(PurplePlugin *plugin, PurpleBuddy *buddy);
-typedef void (*PurpleEventsIdleBackFunc)(PurplePlugin *plugin, PurpleBuddy *buddy);
-
-typedef void (*PurpleEventsImMessageFunc)(PurplePlugin *plugin, PurpleEventsMessageType type, PurpleBuddy *buddy, const gchar *sender, const gchar *message);
-typedef void (*PurpleEventsChatMessageFunc)(PurplePlugin *plugin, PurpleEventsMessageType type, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *sender, const gchar *message);
-
-typedef void (*PurpleEventsEmailFunc)(PurplePlugin *plugin, const gchar *subject, const gchar *from, const gchar *to, const gchar *url);
-
-typedef void (*PurpleEventsConversationGotFocusFunc)(PurplePlugin *plugin, PurpleConversation *conv);
-
-
-typedef struct _PurpleEventsHandler PurpleEventsHandler;
-
-
-const gchar *purple_events_get_plugin_id();
-void purple_events_connect_handler(PurpleEventsHandler *handler);
-void purple_events_disconnect_handler(PurpleEventsHandler *handler);
-
-
-#define PURPLE_EVENTS_HANDLER_ADD_CALLBACK(event_name, EventName) void purple_events_handler_add_##event_name##_callback(PurpleEventsHandler *handler, PurpleEvents##EventName##Func callback)
-PurpleEventsHandler *purple_events_handler_new(PurplePlugin *plugin);
-void purple_events_handler_free(PurpleEventsHandler *handler);
-void purple_events_handler_remove_event(PurpleEventsHandler *handler, gpointer attach, gpointer event);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(signed_on, SignedOn);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(signed_off, SignedOff);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(away, Away);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(back, Back);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(status, Status);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(idle, Idle);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(idle_back, IdleBack);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(im_message, ImMessage);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(chat_message, ChatMessage);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(email, Email);
-PURPLE_EVENTS_HANDLER_ADD_CALLBACK(conversation_got_focus, ConversationGotFocus);
-
+const gchar *purple_events_get_plugin_id(void);
 
 const gchar *purple_events_utils_buddy_get_best_name(PurpleBuddy *buddy);
 const gchar *purple_events_utils_buddy_get_protocol(PurpleBuddy *buddy);

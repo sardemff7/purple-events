@@ -24,27 +24,11 @@
 #include <glib.h>
 #include <purple.h>
 
-#include <purple-events-context.h>
-#include <purple-events-handler.h>
-
+#include "context.h"
 #include "events.h"
 #include "utils.h"
 
 #include "callbacks.h"
-
-#define CALL_HANDLER(name, ...) \
-    G_STMT_START { \
-    PurpleEventsHandler *handler; \
-    GList *handler_; \
-    for ( handler_ = context->handlers ; handler_ != NULL ; handler_ = g_list_next(handler_) ) \
-    { \
-        handler = handler_->data; \
-        if ( handler->name != NULL ) \
-            handler->name(handler->plugin, __VA_ARGS__); \
-    } \
-    } G_STMT_END
-
-
 
 void
 purple_events_callback_signed_on(PurpleBuddy *buddy, PurpleEventsContext *context)
@@ -52,7 +36,7 @@ purple_events_callback_signed_on(PurpleBuddy *buddy, PurpleEventsContext *contex
     if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "signed-on") )
         return;
 
-    CALL_HANDLER(signed_on, buddy);
+    purple_signal_emit(context->plugin, "user-presence.online", buddy);
 }
 
 void
@@ -61,7 +45,7 @@ purple_events_callback_signed_off(PurpleBuddy *buddy, PurpleEventsContext *conte
     if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "signed-off") )
         return;
 
-    CALL_HANDLER(signed_off, buddy);
+    purple_signal_emit(context->plugin, "user-presence.offline", buddy);
 }
 
 void
@@ -93,21 +77,21 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
         if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "away") )
             return;
 
-        CALL_HANDLER(away, buddy, msg);
+        purple_signal_emit(context->plugin, "user-presence.away", buddy, msg);
     }
     else if ( ( ! old_avail ) && new_avail )
     {
         if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "back") )
             return;
 
-        CALL_HANDLER(back, buddy, msg);
+        purple_signal_emit(context->plugin, "user-presence.back", buddy, msg);
     }
     else if ( g_strcmp0(msg, purple_status_get_attr_string(old_status, "message")) != 0 )
     {
         if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "status-message") )
             return;
 
-        CALL_HANDLER(status, buddy, msg);
+        purple_signal_emit(context->plugin, "user-presence.status", buddy, msg);
     }
 }
 
@@ -120,9 +104,9 @@ purple_events_callback_idle_changed(PurpleBuddy *buddy, gboolean oldidle, gboole
         return;
 
     if ( newidle )
-        CALL_HANDLER(idle, buddy);
+        purple_signal_emit(context->plugin, "user-presence.idle", buddy);
     else
-        CALL_HANDLER(idle_back, buddy);
+        purple_signal_emit(context->plugin, "user-presence.idle-back", buddy);
 }
 
 void
@@ -143,9 +127,9 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
         return;
 
     if ( highlight )
-        CALL_HANDLER(im_message, PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT, buddy, sender, message);
+        purple_signal_emit(context->plugin, "user-im.highlight", account, sender, message, conv, flags);
     else
-        CALL_HANDLER(im_message, PURPLE_EVENTS_MESSAGE_TYPE_NORMAL, buddy, sender, message);
+        purple_signal_emit(context->plugin, "user-im.received", account, sender, message, conv, flags);
 }
 
 void
@@ -166,9 +150,9 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
         return;
 
     if ( highlight )
-        CALL_HANDLER(chat_message, PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT, conv, buddy, sender, message);
+        purple_signal_emit(context->plugin, "user-chat.highlight", account, sender, message, conv, flags);
     else
-        CALL_HANDLER(chat_message, PURPLE_EVENTS_MESSAGE_TYPE_NORMAL, conv, buddy, sender, message);
+        purple_signal_emit(context->plugin, "user-chat.received", account, sender, message, conv, flags);
 }
 
 
@@ -178,7 +162,7 @@ purple_events_callback_email_notification(const gchar *subject, const gchar *fro
     if ( ! purple_prefs_get_bool("/plugins/core/events/events/emails") )
         return;
 
-    CALL_HANDLER(email, subject, from, to, url);
+    purple_signal_emit(context->plugin, "user-email.arrived", subject, from, to, url);
 }
 
 void
@@ -192,7 +176,7 @@ purple_events_callback_emails_notification(const gchar **subject, const gchar **
 
     guint i;
     for ( i = 0 ; i < count ; ++i )
-        CALL_HANDLER(email, subject[i], from[i], to[i], url[i]);
+        purple_signal_emit(context->plugin, "user-email.arrived", subject[i], from[i], to[i], url[i]);
 }
 
 
@@ -203,7 +187,7 @@ purple_events_callback_conversation_updated(PurpleConversation *conv, PurpleConv
     {
     case PURPLE_CONV_UPDATE_UNSEEN:
         if ( purple_conversation_has_focus(conv) && ( ! GPOINTER_TO_UINT(purple_conversation_get_data(conv, "purple-events-last-focus")) ) )
-            CALL_HANDLER(conversation_got_focus, conv);
+            purple_signal_emit(context->plugin, "conversation-got-focus", conv);
     break;
     case PURPLE_CONV_UPDATE_TOPIC:
     default:

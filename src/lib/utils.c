@@ -27,6 +27,12 @@
 #include <purple-events.h>
 
 const gchar *
+purple_events_get_plugin_id(void)
+{
+    return PURPLE_EVENTS_PLUGIN_ID;
+}
+
+const gchar *
 purple_events_utils_buddy_get_best_name(PurpleBuddy *buddy)
 {
     g_return_val_if_fail(buddy != NULL, NULL);

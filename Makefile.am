@@ -33,12 +33,8 @@ lib_LTLIBRARIES = \
 	libpurple-events.la
 
 libpurple_events_la_SOURCES = \
-	include/purple-events-handler.h \
-	include/purple-events-context.h \
 	include/purple-events.h \
-	src/lib/utils.c \
-	src/lib/handler.c \
-	src/lib/context.c
+	src/lib/utils.c
 
 libpurple_events_la_CFLAGS = \
 	$(AM_CFLAGS) \
@@ -60,8 +56,6 @@ plugin_LTLIBRARIES = \
 
 purple_events_la_SOURCES = \
 	include/config.h \
-	include/purple-events-handler.h \
-	include/purple-events-context.h \
 	include/purple-events.h \
 	src/plugin/utils.h \
 	src/plugin/utils.c \
@@ -69,6 +63,7 @@ purple_events_la_SOURCES = \
 	src/plugin/ui.c \
 	src/plugin/callbacks.h \
 	src/plugin/callbacks.c \
+	src/plugin/context.h \
 	src/plugin/events.h \
 	src/plugin/events.c
 

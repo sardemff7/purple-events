@@ -37,77 +37,55 @@ _purple_events_exec_exec(const gchar *command_line)
 }
 
 static void
-_purple_events_exec_signed_on(PurplePlugin *plugin, PurpleBuddy *buddy)
+_purple_events_exec_signed_on(PurpleBuddy *buddy, PurplePlugin *plugin)
 {
     _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/signed-on"));
 }
 
 static void
-_purple_events_exec_signed_off(PurplePlugin *plugin, PurpleBuddy *buddy)
+_purple_events_exec_signed_off(PurpleBuddy *buddy, PurplePlugin *plugin)
 {
     _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/signed-off"));
 }
 
 static void
-_purple_events_exec_away(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message)
+_purple_events_exec_away(PurpleBuddy *buddy, const gchar *message, PurplePlugin *plugin)
 {
     _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/away"));
 }
 
 static void
-_purple_events_exec_back(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message)
+_purple_events_exec_back(PurpleBuddy *buddy, const gchar *message, PurplePlugin *plugin)
 {
     _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/back"));
 }
 
 static void
-_purple_events_exec_status(PurplePlugin *plugin, PurpleBuddy *buddy, const gchar *message)
+_purple_events_exec_status(PurpleBuddy *buddy, const gchar *message, PurplePlugin *plugin)
 {
     _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/status-message"));
 }
 
 static void
-_purple_events_exec_idle(PurplePlugin *plugin, PurpleBuddy *buddy)
+_purple_events_exec_idle(PurpleBuddy *buddy, PurplePlugin *plugin)
 {
     _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/idle"));
 }
 
 static void
-_purple_events_exec_idle_back(PurplePlugin *plugin, PurpleBuddy *buddy)
+_purple_events_exec_message(PurpleAccount *account, const gchar *sender, const gchar *message, PurpleConversation *conv, PurpleMessageFlags flags, PurplePlugin *plugin)
 {
-    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/idle"));
+    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
 }
 
 static void
-_purple_events_exec_im_message(PurplePlugin *plugin, PurpleEventsMessageType type, PurpleBuddy *buddy, const gchar *sender, const gchar *message)
+_purple_events_exec_highlight(PurpleAccount *account, const gchar *sender, const gchar *message, PurpleConversation *conv, PurpleMessageFlags flags, PurplePlugin *plugin)
 {
-    switch ( type )
-    {
-    case PURPLE_EVENTS_MESSAGE_TYPE_NORMAL:
-        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
-    break;
-    case PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT:
-        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
-    break;
-    }
+    _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
 }
 
 static void
-_purple_events_exec_chat_message(PurplePlugin *plugin, PurpleEventsMessageType type, PurpleConversation *conv, PurpleBuddy *buddy, const gchar *sender, const gchar *message)
-{
-    switch ( type )
-    {
-    case PURPLE_EVENTS_MESSAGE_TYPE_NORMAL:
-        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
-    break;
-    case PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT:
-        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
-    break;
-    }
-}
-
-static void
-_purple_events_exec_email(PurplePlugin *plugin, const gchar *subject, const gchar *from, const gchar *to, const gchar *url)
+_purple_events_exec_email(const gchar *subject, const gchar *from, const gchar *to, const gchar *url, PurplePlugin *plugin)
 {
     _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/emails"));
 }
@@ -181,7 +159,6 @@ _purple_events_exec_get_pref_frame(PurplePlugin *plugin)
 }
 
 static void _purple_events_exec_init(PurplePlugin *plugin);
-static void _purple_events_exec_destroy(PurplePlugin *plugin);
 static gboolean _purple_events_exec_load(PurplePlugin *plugin);
 static gboolean _purple_events_exec_unload(PurplePlugin *plugin);
 
@@ -209,7 +186,7 @@ static PurplePluginInfo _purple_events_exec_plugin_info = {
 
     .load           = _purple_events_exec_load,
     .unload         = _purple_events_exec_unload,
-    .destroy        = _purple_events_exec_destroy,
+    .destroy        = NULL,
 
     .ui_info        = NULL,
     .extra_info     = NULL,
@@ -231,28 +208,6 @@ _purple_events_exec_init(PurplePlugin *plugin)
     _purple_events_exec_plugin_info.summary = _("Exec a command on specific event");
     _purple_events_exec_plugin_info.dependencies = g_list_prepend(_purple_events_exec_plugin_info.dependencies, (gpointer) purple_events_get_plugin_id());
 
-    PurpleEventsHandler *handler;
-
-    handler = purple_events_handler_new(plugin);
-    plugin->extra = handler;
-
-    purple_events_handler_add_signed_on_callback(handler, _purple_events_exec_signed_on);
-    purple_events_handler_add_signed_off_callback(handler, _purple_events_exec_signed_off);
-
-    purple_events_handler_add_away_callback(handler, _purple_events_exec_away);
-    purple_events_handler_add_back_callback(handler, _purple_events_exec_back);
-
-    purple_events_handler_add_status_callback(handler, _purple_events_exec_status);
-
-    purple_events_handler_add_idle_callback(handler, _purple_events_exec_idle);
-    purple_events_handler_add_idle_back_callback(handler, _purple_events_exec_idle_back);
-
-    purple_events_handler_add_im_message_callback(handler, _purple_events_exec_im_message);
-
-    purple_events_handler_add_chat_message_callback(handler, _purple_events_exec_chat_message);
-
-    purple_events_handler_add_email_callback(handler, _purple_events_exec_email);
-
     purple_prefs_add_none("/plugins/core/events-exec");
     purple_prefs_add_string("/plugins/core/events-exec/message", "");
     purple_prefs_add_string("/plugins/core/events-exec/highlight", "");
@@ -265,16 +220,64 @@ _purple_events_exec_init(PurplePlugin *plugin)
     purple_prefs_add_string("/plugins/core/events-exec/emails", "");
 }
 
-static void
-_purple_events_exec_destroy(PurplePlugin *plugin)
-{
-    purple_events_handler_free(plugin->extra);
-}
-
 static gboolean
 _purple_events_exec_load(PurplePlugin *plugin)
 {
-    purple_events_connect_handler(plugin->extra);
+    gpointer handle;
+
+    handle = purple_plugins_find_with_id(purple_events_get_plugin_id());
+    g_return_val_if_fail(handle != NULL, FALSE);
+
+    purple_signal_connect(
+        handle, "user-presence.online", plugin,
+        (PurpleCallback)_purple_events_exec_signed_on, plugin
+    );
+    purple_signal_connect(
+        handle, "user-presence.offline", plugin,
+        (PurpleCallback)_purple_events_exec_signed_off, plugin
+    );
+    purple_signal_connect(
+        handle, "user-presence.away", plugin,
+        (PurpleCallback)_purple_events_exec_away, plugin
+    );
+    purple_signal_connect(
+        handle, "user-presence.back", plugin,
+        (PurpleCallback)_purple_events_exec_back, plugin
+    );
+    purple_signal_connect(
+        handle, "user-presence.idle", plugin,
+        (PurpleCallback)_purple_events_exec_idle, plugin
+    );
+    purple_signal_connect(
+        handle, "user-presence.idle-back", plugin,
+        (PurpleCallback)_purple_events_exec_idle, plugin
+    );
+    purple_signal_connect(
+        handle, "user-presence.message", plugin,
+        (PurpleCallback)_purple_events_exec_status, plugin
+    );
+
+    purple_signal_connect(
+        handle, "user-im.received", plugin,
+        (PurpleCallback)_purple_events_exec_message, plugin
+    );
+    purple_signal_connect(
+        handle, "user-im.highlight", plugin,
+        (PurpleCallback)_purple_events_exec_highlight, plugin
+    );
+    purple_signal_connect(
+        handle, "user-chat.received", plugin,
+        (PurpleCallback)_purple_events_exec_message, plugin
+    );
+    purple_signal_connect(
+        handle, "user-chat.highlight", plugin,
+        (PurpleCallback)_purple_events_exec_highlight, plugin
+    );
+
+    purple_signal_connect(
+        handle, "user-email.arrived", plugin,
+        (PurpleCallback)_purple_events_exec_email, plugin
+    );
 
     return TRUE;
 }
@@ -282,7 +285,61 @@ _purple_events_exec_load(PurplePlugin *plugin)
 static gboolean
 _purple_events_exec_unload(PurplePlugin *plugin)
 {
-    purple_events_disconnect_handler(plugin->extra);
+    gpointer handle;
+
+    handle = purple_plugins_find_with_id(purple_events_get_plugin_id());
+    g_return_val_if_fail(handle != NULL, FALSE);
+
+    purple_signal_disconnect(
+        handle, "user-presence.online", plugin,
+        (PurpleCallback)_purple_events_exec_signed_on
+    );
+    purple_signal_disconnect(
+        handle, "user-presence.offline", plugin,
+        (PurpleCallback)_purple_events_exec_signed_off
+    );
+    purple_signal_disconnect(
+        handle, "user-presence.away", plugin,
+        (PurpleCallback)_purple_events_exec_away
+    );
+    purple_signal_disconnect(
+        handle, "user-presence.back", plugin,
+        (PurpleCallback)_purple_events_exec_back
+    );
+    purple_signal_disconnect(
+        handle, "user-presence.idle", plugin,
+        (PurpleCallback)_purple_events_exec_idle
+    );
+    purple_signal_disconnect(
+        handle, "user-presence.idle-back", plugin,
+        (PurpleCallback)_purple_events_exec_idle
+    );
+    purple_signal_disconnect(
+        handle, "user-presence.message", plugin,
+        (PurpleCallback)_purple_events_exec_status
+    );
+
+    purple_signal_disconnect(
+        handle, "user-im.received", plugin,
+        (PurpleCallback)_purple_events_exec_message
+    );
+    purple_signal_disconnect(
+        handle, "user-im.highlight", plugin,
+        (PurpleCallback)_purple_events_exec_highlight
+    );
+    purple_signal_disconnect(
+        handle, "user-chat.received", plugin,
+        (PurpleCallback)_purple_events_exec_message
+    );
+    purple_signal_disconnect(
+        handle, "user-chat.highlight", plugin,
+        (PurpleCallback)_purple_events_exec_highlight
+    );
+
+    purple_signal_disconnect(
+        handle, "user-email.arrived", plugin,
+        (PurpleCallback)_purple_events_exec_email
+    );
 
     return TRUE;
 }

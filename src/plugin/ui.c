@@ -25,7 +25,7 @@
 #include <glib/gi18n-lib.h>
 #include <purple.h>
 
-#include <purple-events-context.h>
+#include "context.h"
 
 #include "ui.h"
 

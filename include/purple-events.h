@@ -42,8 +42,7 @@ typedef enum
 typedef enum
 {
     PURPLE_EVENTS_MESSAGE_TYPE_NORMAL,
-    PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT,
-    PURPLE_EVENTS_MESSAGE_TYPE_ACTION
+    PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT
 } PurpleEventsMessageType;
 
 typedef void (*PurpleEventsSignedOnFunc)(PurplePlugin *plugin, PurpleBuddy *buddy);

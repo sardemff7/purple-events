@@ -184,26 +184,17 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
 
     highlight = flags & PURPLE_MESSAGE_NICK;
 
-    gboolean action;
-    gchar *stripped_message;
-
-    stripped_message = purple_markup_strip_html(message);
-    action = g_str_has_prefix(stripped_message, "/me ");
-    g_free(stripped_message);
-
     if ( buddy == NULL )
     {
-        if ( ! purple_events_utils_check_event_dispatch(context, account, conv, highlight ? "anonymous-highlight" : action ? "anonymous-action" : "anonymous-message") )
+        if ( ! purple_events_utils_check_event_dispatch(context, account, conv, highlight ? "anonymous-highlight" : "anonymous-message") )
             return;
     }
-    else if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, highlight ? "highlight" : action ? "action" : "message") )
+    else if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, highlight ? "highlight" : "message") )
         return;
 
     PurpleEventsMessageType type = PURPLE_EVENTS_MESSAGE_TYPE_NORMAL;
     if ( highlight )
         type = PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT;
-    else if ( action )
-        type = PURPLE_EVENTS_MESSAGE_TYPE_ACTION;
 
     PurpleEventsHandler *handler;
     GList *handler_;
@@ -226,26 +217,17 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
 
     highlight = flags & PURPLE_MESSAGE_NICK;
 
-    gboolean action;
-    gchar *stripped_message;
-
-    stripped_message = purple_markup_strip_html(message);
-    action = g_str_has_prefix(stripped_message, "/me ");
-    g_free(stripped_message);
-
     if ( buddy == NULL )
     {
-        if ( ! purple_events_utils_check_event_dispatch(context, account, conv, highlight ? "anonymous-highlight" : action ? "anonymous-action" : "anonymous-message") )
+        if ( ! purple_events_utils_check_event_dispatch(context, account, conv, highlight ? "anonymous-highlight" : "anonymous-message") )
             return;
     }
-    else if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, highlight ? "highlight" : action ? "action" : "message") )
+    else if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, highlight ? "highlight" : "message") )
         return;
 
     PurpleEventsMessageType type = PURPLE_EVENTS_MESSAGE_TYPE_NORMAL;
     if ( highlight )
         type = PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT;
-    else if ( action )
-        type = PURPLE_EVENTS_MESSAGE_TYPE_ACTION;
 
     PurpleEventsHandler *handler;
     GList *handler_;

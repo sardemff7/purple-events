@@ -54,12 +54,6 @@ purple_events_ui_get_pref_frame(PurplePlugin *plugin)
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/events/events/action",
-        _("Actions (/me messages)")
-    );
-    purple_plugin_pref_frame_add(frame, pref);
-
-    pref = purple_plugin_pref_new_with_name_and_label(
         "/plugins/core/events/events/anonymous-message",
         _("Anonymous (non-buddy) messages")
     );
@@ -68,12 +62,6 @@ purple_events_ui_get_pref_frame(PurplePlugin *plugin)
     pref = purple_plugin_pref_new_with_name_and_label(
         "/plugins/core/events/events/anonymous-highlight",
         _("Anonymous highlights")
-    );
-    purple_plugin_pref_frame_add(frame, pref);
-
-    pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/events/events/anonymous-action",
-        _("Anonymous actions (/me messages)")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
@@ -202,7 +190,6 @@ static const gchar *_purple_events_ui_events[] =
 {
     "events/message",
     "events/highlight",
-    "events/action",
     "events/signed-on",
     "events/signed-off",
     "events/away",
@@ -217,7 +204,6 @@ static const gchar *_purple_events_ui_events_labels[] =
 {
     N_("Messages"),
     N_("Highlights"),
-    N_("Actions (/me messages)"),
     N_("Buddy signing on"),
     N_("Buddy signing off"),
     N_("Buddy going away"),

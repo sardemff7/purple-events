@@ -92,9 +92,6 @@ _purple_events_exec_im_message(PurplePlugin *plugin, PurpleEventsMessageType typ
     case PURPLE_EVENTS_MESSAGE_TYPE_NORMAL:
         _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
     break;
-    case PURPLE_EVENTS_MESSAGE_TYPE_ACTION:
-        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/action"));
-    break;
     case PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT:
         _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
     break;
@@ -108,9 +105,6 @@ _purple_events_exec_chat_message(PurplePlugin *plugin, PurpleEventsMessageType t
     {
     case PURPLE_EVENTS_MESSAGE_TYPE_NORMAL:
         _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/message"));
-    break;
-    case PURPLE_EVENTS_MESSAGE_TYPE_ACTION:
-        _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/action"));
     break;
     case PURPLE_EVENTS_MESSAGE_TYPE_HIGHLIGHT:
         _purple_events_exec_exec(purple_prefs_get_string("/plugins/core/events-exec/highlight"));
@@ -142,8 +136,8 @@ _purple_events_exec_get_pref_frame(PurplePlugin *plugin)
     purple_plugin_pref_frame_add(frame, pref);
 
     pref = purple_plugin_pref_new_with_name_and_label(
-        "/plugins/core/events-exec/action",
-        _("Actions (/me messages)")
+        "/plugins/core/events-exec/highlight",
+        _("Highlights")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
@@ -274,7 +268,7 @@ _purple_events_exec_init(PurplePlugin *plugin)
 
     purple_prefs_add_none("/plugins/core/events-exec");
     purple_prefs_add_string("/plugins/core/events-exec/message", "");
-    purple_prefs_add_string("/plugins/core/events-exec/action", "");
+    purple_prefs_add_string("/plugins/core/events-exec/highlight", "");
     purple_prefs_add_string("/plugins/core/events-exec/signed-on", "");
     purple_prefs_add_string("/plugins/core/events-exec/signed-off", "");
     purple_prefs_add_string("/plugins/core/events-exec/away", "");

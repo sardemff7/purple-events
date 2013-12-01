@@ -112,29 +112,29 @@ _purple_events_init(PurplePlugin *plugin)
     purple_prefs_add_bool("/plugins/core/events/restrictions/stack-events", FALSE);
     purple_prefs_add_bool("/plugins/core/events/restrictions/stack-emails", FALSE);
 
-    purple_signal_register(plugin, "user-presence.online", purple_marshal_VOID__POINTER, NULL, 1,
+    purple_signal_register(plugin, "user_presence-online", purple_marshal_VOID__POINTER, NULL, 1,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_BLIST_BUDDY));
-    purple_signal_register(plugin, "user-presence.offline", purple_marshal_VOID__POINTER, NULL, 1,
+    purple_signal_register(plugin, "user_presence-offline", purple_marshal_VOID__POINTER, NULL, 1,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_BLIST_BUDDY));
-    purple_signal_register(plugin, "user-presence.away", purple_marshal_VOID__POINTER_POINTER, NULL, 2,
+    purple_signal_register(plugin, "user_presence-away", purple_marshal_VOID__POINTER_POINTER, NULL, 2,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_BLIST_BUDDY), purple_value_new(PURPLE_TYPE_STRING));
-    purple_signal_register(plugin, "user-presence.back", purple_marshal_VOID__POINTER_POINTER, NULL, 2,
+    purple_signal_register(plugin, "user_presence-back", purple_marshal_VOID__POINTER_POINTER, NULL, 2,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_BLIST_BUDDY), purple_value_new(PURPLE_TYPE_STRING));
-    purple_signal_register(plugin, "user-presence.idle", purple_marshal_VOID__POINTER, NULL, 1,
+    purple_signal_register(plugin, "user_presence-idle", purple_marshal_VOID__POINTER, NULL, 1,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_BLIST_BUDDY));
-    purple_signal_register(plugin, "user-presence.idle-back", purple_marshal_VOID__POINTER, NULL, 1,
+    purple_signal_register(plugin, "user_presence-idle-back", purple_marshal_VOID__POINTER, NULL, 1,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_BLIST_BUDDY));
-    purple_signal_register(plugin, "user-presence.message", purple_marshal_VOID__POINTER_POINTER, NULL, 2,
+    purple_signal_register(plugin, "user_presence-message", purple_marshal_VOID__POINTER_POINTER, NULL, 2,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_BLIST_BUDDY), purple_value_new(PURPLE_TYPE_STRING));
-    purple_signal_register(plugin, "user-im.received", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER_UINT, NULL, 5,
+    purple_signal_register(plugin, "user_im-received", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER_UINT, NULL, 5,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_ACCOUNT), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_CONVERSATION), purple_value_new(PURPLE_TYPE_UINT));
-    purple_signal_register(plugin, "user-im.highlight", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER_UINT, NULL, 5,
+    purple_signal_register(plugin, "user_im-highlight", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER_UINT, NULL, 5,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_ACCOUNT), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_CONVERSATION), purple_value_new(PURPLE_TYPE_UINT));
-    purple_signal_register(plugin, "user-chat.received", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER_UINT, NULL, 5,
+    purple_signal_register(plugin, "user_chat-received", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER_UINT, NULL, 5,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_ACCOUNT), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_CONVERSATION), purple_value_new(PURPLE_TYPE_UINT));
-    purple_signal_register(plugin, "user-chat.highlight", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER_UINT, NULL, 5,
+    purple_signal_register(plugin, "user_chat-highlight", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER_UINT, NULL, 5,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_ACCOUNT), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_CONVERSATION), purple_value_new(PURPLE_TYPE_UINT));
-    purple_signal_register(plugin, "user-email.arrived", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER, NULL, 4,
+    purple_signal_register(plugin, "user_email-arrived", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER, NULL, 4,
                            purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING));
     purple_signal_register(plugin, "conversation-got-focus", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER, NULL, 1,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_CONVERSATION));
@@ -145,18 +145,18 @@ _purple_events_destroy(PurplePlugin *plugin)
 {
     PurpleEventsContext *context = plugin->extra;
 
-    purple_signal_unregister(plugin, "user-presence.online");
-    purple_signal_unregister(plugin, "user-presence.offline");
-    purple_signal_unregister(plugin, "user-presence.away");
-    purple_signal_unregister(plugin, "user-presence.back");
-    purple_signal_unregister(plugin, "user-presence.idle");
-    purple_signal_unregister(plugin, "user-presence.idle-back");
-    purple_signal_unregister(plugin, "user-presence.message");
-    purple_signal_unregister(plugin, "user-im.received");
-    purple_signal_unregister(plugin, "user-im.highlight");
-    purple_signal_unregister(plugin, "user-chat.received");
-    purple_signal_unregister(plugin, "user-chat.highlight");
-    purple_signal_unregister(plugin, "user-email.arrived");
+    purple_signal_unregister(plugin, "user_presence-online");
+    purple_signal_unregister(plugin, "user_presence-offline");
+    purple_signal_unregister(plugin, "user_presence-away");
+    purple_signal_unregister(plugin, "user_presence-back");
+    purple_signal_unregister(plugin, "user_presence-idle");
+    purple_signal_unregister(plugin, "user_presence-idle-back");
+    purple_signal_unregister(plugin, "user_presence-message");
+    purple_signal_unregister(plugin, "user_im-received");
+    purple_signal_unregister(plugin, "user_im-highlight");
+    purple_signal_unregister(plugin, "user_chat-received");
+    purple_signal_unregister(plugin, "user_chat-highlight");
+    purple_signal_unregister(plugin, "user_email-arrived");
     purple_signal_unregister(plugin, "conversation-got-focus");
 
     g_list_free(context->handlers);

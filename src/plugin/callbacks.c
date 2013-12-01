@@ -36,7 +36,7 @@ purple_events_callback_signed_on(PurpleBuddy *buddy, PurpleEventsContext *contex
     if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "signed-on") )
         return;
 
-    purple_signal_emit(context->plugin, "user-presence.online", buddy);
+    purple_signal_emit(context->plugin, "user_presence-online", buddy);
 }
 
 void
@@ -45,7 +45,7 @@ purple_events_callback_signed_off(PurpleBuddy *buddy, PurpleEventsContext *conte
     if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "signed-off") )
         return;
 
-    purple_signal_emit(context->plugin, "user-presence.offline", buddy);
+    purple_signal_emit(context->plugin, "user_presence-offline", buddy);
 }
 
 void
@@ -77,21 +77,21 @@ purple_events_callback_status_changed(PurpleBuddy *buddy, PurpleStatus *old_stat
         if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "away") )
             return;
 
-        purple_signal_emit(context->plugin, "user-presence.away", buddy, msg);
+        purple_signal_emit(context->plugin, "user_presence-away", buddy, msg);
     }
     else if ( ( ! old_avail ) && new_avail )
     {
         if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "back") )
             return;
 
-        purple_signal_emit(context->plugin, "user-presence.back", buddy, msg);
+        purple_signal_emit(context->plugin, "user_presence-back", buddy, msg);
     }
     else if ( g_strcmp0(msg, purple_status_get_attr_string(old_status, "message")) != 0 )
     {
         if ( ! purple_events_utils_check_buddy_event_dispatch(context, buddy, "status-message") )
             return;
 
-        purple_signal_emit(context->plugin, "user-presence.status", buddy, msg);
+        purple_signal_emit(context->plugin, "user_presence-status", buddy, msg);
     }
 }
 
@@ -104,9 +104,9 @@ purple_events_callback_idle_changed(PurpleBuddy *buddy, gboolean oldidle, gboole
         return;
 
     if ( newidle )
-        purple_signal_emit(context->plugin, "user-presence.idle", buddy);
+        purple_signal_emit(context->plugin, "user_presence-idle", buddy);
     else
-        purple_signal_emit(context->plugin, "user-presence.idle-back", buddy);
+        purple_signal_emit(context->plugin, "user_presence-idle-back", buddy);
 }
 
 void
@@ -127,9 +127,9 @@ purple_events_callback_new_im_msg(PurpleAccount *account, const gchar *sender, c
         return;
 
     if ( highlight )
-        purple_signal_emit(context->plugin, "user-im.highlight", account, sender, message, conv, flags);
+        purple_signal_emit(context->plugin, "user_im-highlight", account, sender, message, conv, flags);
     else
-        purple_signal_emit(context->plugin, "user-im.received", account, sender, message, conv, flags);
+        purple_signal_emit(context->plugin, "user_im-received", account, sender, message, conv, flags);
 }
 
 void
@@ -150,9 +150,9 @@ purple_events_callback_new_chat_msg(PurpleAccount *account, const gchar *sender,
         return;
 
     if ( highlight )
-        purple_signal_emit(context->plugin, "user-chat.highlight", account, sender, message, conv, flags);
+        purple_signal_emit(context->plugin, "user_chat-highlight", account, sender, message, conv, flags);
     else
-        purple_signal_emit(context->plugin, "user-chat.received", account, sender, message, conv, flags);
+        purple_signal_emit(context->plugin, "user_chat-received", account, sender, message, conv, flags);
 }
 
 
@@ -162,7 +162,7 @@ purple_events_callback_email_notification(const gchar *subject, const gchar *fro
     if ( ! purple_prefs_get_bool("/plugins/core/events/events/emails") )
         return;
 
-    purple_signal_emit(context->plugin, "user-email.arrived", subject, from, to, url);
+    purple_signal_emit(context->plugin, "user_email-arrived", subject, from, to, url);
 }
 
 void
@@ -176,7 +176,7 @@ purple_events_callback_emails_notification(const gchar **subject, const gchar **
 
     guint i;
     for ( i = 0 ; i < count ; ++i )
-        purple_signal_emit(context->plugin, "user-email.arrived", subject[i], from[i], to[i], url[i]);
+        purple_signal_emit(context->plugin, "user_email-arrived", subject[i], from[i], to[i], url[i]);
 }
 
 

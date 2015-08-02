@@ -1,5 +1,5 @@
 AC_PREREQ([2.65])
-AC_INIT([purple-events], [0.99.1])
+AC_INIT([purple-events], [0.99.2])
 
 AC_CONFIG_HEADERS([include/config.h])
 AC_CONFIG_SRCDIR([src/])

@@ -20,10 +20,10 @@ Visit the [releases repository](http://download.tuxfamily.org/purpleevents/purpl
 Licence
 -------
 
-purple-events is licenced under the terms of the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl.html)
+purple-events is licenced under the terms of the [GNU General Public License version 3](//www.gnu.org/licenses/gpl.html)
 
 
 Author / Contact
 ----------------
 
-Quentin “Sardem FF7” Glidic (sardemff7+pidgin@sardemff7.net) — [My other Free Software projects](http://projects.sardemff7.net/)
+Quentin “Sardem FF7” Glidic (sardemff7+pidgin@sardemff7.net) — [My other Free Software projects](//www.sardemff7.net/)

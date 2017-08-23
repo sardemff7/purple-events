@@ -226,3 +226,12 @@ purple_events_callback_account_signed_on(PurpleConnection *conn, PurpleEventsCon
 
     data->handle = purple_timeout_add_seconds(5, _purple_events_callback_account_signed_on_timeout, data);
 }
+
+void
+purple_events_callback_auth_requested(PurpleAccount *account, const char *remote_user, const char *message, PurpleEventsContext *context)
+{
+    if ( ! purple_events_utils_check_event_dispatch(context, account, NULL, "authorization-requested") )
+        return;
+    
+    purple_signal_emit(context->plugin, "authorization-requested", account, remote_user, message);
+}

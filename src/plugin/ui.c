@@ -103,7 +103,7 @@ purple_events_ui_get_pref_frame(PurplePlugin *plugin)
 
     pref = purple_plugin_pref_new_with_name_and_label(
         "/plugins/core/events/events/authorization-requested",
-        _("Buddy requests authorization")
+        _("Buddy requesting authorization")
     );
     purple_plugin_pref_frame_add(frame, pref);
 
@@ -210,7 +210,7 @@ static const gchar *_purple_events_ui_events_labels[] =
     N_("Buddy going idle"),
     N_("Buddy coming back"),
     N_("Status message change (or removal)"),
-    N_("Buddy requests authorization"),
+    N_("Buddy requesting authorization"),
     NULL
 };
 

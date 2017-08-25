@@ -137,10 +137,10 @@ _purple_events_init(PurplePlugin *plugin)
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_ACCOUNT), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_CONVERSATION), purple_value_new(PURPLE_TYPE_UINT));
     purple_signal_register(plugin, "user_email-arrived", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER, NULL, 4,
                            purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING));
+    purple_signal_register(plugin, "user_authorization-requested", purple_marshal_VOID__POINTER_POINTER_POINTER, NULL, 3,
+                           purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_ACCOUNT), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING));
     purple_signal_register(plugin, "conversation-got-focus", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER, NULL, 1,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_CONVERSATION));
-    purple_signal_register(plugin, "authorization-requested", purple_marshal_VOID__POINTER_POINTER_POINTER, NULL, 3,
-                           purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_ACCOUNT), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING));
 }
 
 static void
@@ -160,8 +160,8 @@ _purple_events_destroy(PurplePlugin *plugin)
     purple_signal_unregister(plugin, "user_chat-received");
     purple_signal_unregister(plugin, "user_chat-highlight");
     purple_signal_unregister(plugin, "user_email-arrived");
+    purple_signal_unregister(plugin, "user_authorization-requested");
     purple_signal_unregister(plugin, "conversation-got-focus");
-    purple_signal_unregister(plugin, "authorization-requested");
 
     g_list_free(context->handlers);
     g_free(context);

@@ -38,7 +38,7 @@ void purple_events_callback_email_notification(const gchar *subject, const gchar
 void purple_events_callback_emails_notification(const gchar **subject, const gchar **from, const gchar **to, const gchar **url, guint count, PurpleEventsContext *context);
 void purple_events_callback_conversation_updated(PurpleConversation *conv, PurpleConvUpdateType type, PurpleEventsContext *context);
 void purple_events_callback_account_signed_on(PurpleConnection *conn, PurpleEventsContext *context);
-
+void purple_events_callback_auth_requested(PurpleAccount *account, const char *remote_user, const char *message, PurpleEventsContext *context);
 
 G_END_DECLS
 

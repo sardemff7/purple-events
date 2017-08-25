@@ -99,6 +99,7 @@ _purple_events_init(PurplePlugin *plugin)
     purple_prefs_add_bool("/plugins/core/events/events/anonymous-highlight", FALSE);
     purple_prefs_add_bool("/plugins/core/events/events/signed-on", TRUE);
     purple_prefs_add_bool("/plugins/core/events/events/signed-off", FALSE);
+    purple_prefs_add_bool("/plugins/core/events/events/authorization-requested", TRUE);
     purple_prefs_add_bool("/plugins/core/events/events/away", TRUE);
     purple_prefs_add_bool("/plugins/core/events/events/idle", TRUE);
     purple_prefs_add_bool("/plugins/core/events/events/back", TRUE);
@@ -136,6 +137,8 @@ _purple_events_init(PurplePlugin *plugin)
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_ACCOUNT), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_CONVERSATION), purple_value_new(PURPLE_TYPE_UINT));
     purple_signal_register(plugin, "user_email-arrived", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER, NULL, 4,
                            purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING));
+    purple_signal_register(plugin, "user_authorization-requested", purple_marshal_VOID__POINTER_POINTER_POINTER, NULL, 3,
+                           purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_ACCOUNT), purple_value_new(PURPLE_TYPE_STRING), purple_value_new(PURPLE_TYPE_STRING));
     purple_signal_register(plugin, "conversation-got-focus", purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER, NULL, 1,
                            purple_value_new(PURPLE_TYPE_SUBTYPE, PURPLE_SUBTYPE_CONVERSATION));
 }
@@ -157,6 +160,7 @@ _purple_events_destroy(PurplePlugin *plugin)
     purple_signal_unregister(plugin, "user_chat-received");
     purple_signal_unregister(plugin, "user_chat-highlight");
     purple_signal_unregister(plugin, "user_email-arrived");
+    purple_signal_unregister(plugin, "user_authorization-requested");
     purple_signal_unregister(plugin, "conversation-got-focus");
 
     g_list_free(context->handlers);
@@ -172,6 +176,7 @@ _purple_events_load(PurplePlugin *plugin)
     void *blist_handle = purple_blist_get_handle();
     void *conn_handle = purple_connections_get_handle();
     void *notify_handle = purple_notify_get_handle();
+    void *acct_handle = purple_accounts_get_handle();
 
     purple_signal_connect(
         blist_handle, "buddy-signed-on", plugin,
@@ -231,6 +236,12 @@ _purple_events_load(PurplePlugin *plugin)
         blist_handle, "blist-node-extended-menu", plugin,
         (PurpleCallback)purple_events_ui_menu_add, plugin->extra
     );
+    
+    
+    purple_signal_connect(
+        acct_handle, "account-authorization-requested-with-message", plugin,
+        (PurpleCallback)purple_events_callback_auth_requested, plugin->extra
+    );
 
     return TRUE;
 }
@@ -251,6 +262,7 @@ _purple_events_unload(PurplePlugin *plugin)
     void *conv_handle = purple_conversations_get_handle();
     void *blist_handle = purple_blist_get_handle();
     void *conn_handle = purple_connections_get_handle();
+    void *acct_handle = purple_accounts_get_handle();
 
     g_list_free_full(context->just_signed_on_accounts, _purple_events_just_signed_on_account_free);
 
@@ -294,6 +306,12 @@ _purple_events_unload(PurplePlugin *plugin)
     purple_signal_disconnect(
         blist_handle, "blist-node-extended-menu", plugin,
         (PurpleCallback)purple_events_ui_menu_add
+    );
+    
+    
+    purple_signal_disconnect(
+        acct_handle, "account-authorization-requested-with-message", plugin,
+        (PurpleCallback)purple_events_callback_auth_requested
     );
 
     return TRUE;

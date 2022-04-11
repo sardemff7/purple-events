@@ -26,4 +26,4 @@ purple-events is licenced under the terms of the [GNU General Public License ver
 Author / Contact
 ----------------
 
-Quentin “Sardem FF7” Glidic (sardemff7+pidgin@sardemff7.net) — [My other Free Software projects](//www.sardemff7.net/)
+Morgane “Sardem FF7” Glidic (sardemff7+pidgin@sardemff7.net) — [My other Free Software projects](//www.sardemff7.net/)

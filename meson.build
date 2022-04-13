@@ -1,5 +1,5 @@
 project('purple-events', 'c',
-    version: '0.99.2',
+    version: '0.99.3',
     meson_version: '>=0.58.0',
     license: [ 'GPL3+' ],
     default_options: [

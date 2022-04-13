@@ -57,8 +57,8 @@ static PurplePluginInfo _purple_events_plugin_info = {
     .version        = PACKAGE_VERSION,
     .summary        = NULL,
     .description    = NULL,
-    .author         = "Quentin \"Sardem FF7\" Glidic <sardemff7+pidgin@sardemff7.net>",
-    .homepage       = "http://" PACKAGE_TARNAME ".sardemff7.net/",
+    .author         = "Morgane \"Sardem FF7\" Glidic <sardemff7+pidgin@sardemff7.net>",
+    .homepage       = "https://" PACKAGE_NAME ".sardemff7.net/",
 
     .load           = _purple_events_load,
     .unload         = _purple_events_unload,
@@ -236,8 +236,8 @@ _purple_events_load(PurplePlugin *plugin)
         blist_handle, "blist-node-extended-menu", plugin,
         (PurpleCallback)purple_events_ui_menu_add, plugin->extra
     );
-    
-    
+
+
     purple_signal_connect(
         acct_handle, "account-authorization-requested-with-message", plugin,
         (PurpleCallback)purple_events_callback_auth_requested, plugin->extra
@@ -307,8 +307,8 @@ _purple_events_unload(PurplePlugin *plugin)
         blist_handle, "blist-node-extended-menu", plugin,
         (PurpleCallback)purple_events_ui_menu_add
     );
-    
-    
+
+
     purple_signal_disconnect(
         acct_handle, "account-authorization-requested-with-message", plugin,
         (PurpleCallback)purple_events_callback_auth_requested

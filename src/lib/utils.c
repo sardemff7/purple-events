@@ -26,13 +26,13 @@
 
 #include <purple-events.h>
 
-const gchar *
+PURPLE_EVENTS_EXPORT const gchar *
 purple_events_get_plugin_id(void)
 {
     return PURPLE_EVENTS_PLUGIN_ID;
 }
 
-const gchar *
+PURPLE_EVENTS_EXPORT const gchar *
 purple_events_utils_buddy_get_best_name(PurpleBuddy *buddy)
 {
     g_return_val_if_fail(buddy != NULL, NULL);
@@ -55,7 +55,7 @@ purple_events_utils_buddy_get_best_name(PurpleBuddy *buddy)
 }
 
 
-const gchar *
+PURPLE_EVENTS_EXPORT const gchar *
 purple_events_utils_buddy_get_protocol(PurpleBuddy *buddy)
 {
     g_return_val_if_fail(buddy != NULL, NULL);
@@ -70,7 +70,7 @@ purple_events_utils_buddy_get_protocol(PurpleBuddy *buddy)
     return protocol_name;
 }
 
-gchar *
+PURPLE_EVENTS_EXPORT gchar *
 purple_events_utils_protocol_get_icon_uri(const gchar *protocol_name, PurpleEventsUtilsIconFormat format)
 {
     g_return_val_if_fail(protocol_name != NULL, NULL);

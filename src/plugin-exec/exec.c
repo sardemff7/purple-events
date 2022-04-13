@@ -181,8 +181,8 @@ static PurplePluginInfo _purple_events_exec_plugin_info = {
     .version        = PACKAGE_VERSION,
     .summary        = NULL,
     .description    = NULL,
-    .author         = "Quentin \"Sardem FF7\" Glidic <sardemff7+pidgin@sardemff7.net>",
-    .homepage       = "http://" PACKAGE_TARNAME ".sardemff7.net/",
+    .author         = "Morgane \"Sardem FF7\" Glidic <sardemff7+pidgin@sardemff7.net>",
+    .homepage       = "https://" PACKAGE_NAME ".sardemff7.net/",
 
     .load           = _purple_events_exec_load,
     .unload         = _purple_events_exec_unload,
